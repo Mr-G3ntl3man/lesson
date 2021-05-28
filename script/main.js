@@ -18,5 +18,5 @@ console.log(period === mission);
 
 console.log(addExpenses.toLowerCase().split(','));
 
-budgetDay = money;
+budgetDay = 0;
 console.log(budgetDay);
