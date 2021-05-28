@@ -1,9 +1,10 @@
-const money = 0,
+let money = 0,
 	income = 'фриланс',
 	addExpenses = 'интернет, такси, коммуналка',
 	deposit = false,
 	mission = 0,
-	period = 1;
+	period = 1,
+	budgetDay;
 
 console.log(typeof money);
 
@@ -15,7 +16,7 @@ console.log(addExpenses.length);
 
 console.log(period === mission);
 
-console.log(addExpenses.toLowerCase().split(''));
+console.log(addExpenses.toLowerCase().split(','));
 
-const budgetDay = 0;
+budgetDay = money;
 console.log(budgetDay);
