@@ -1,7 +1,8 @@
 let num = 266219;
+let numArray = num.toString().split('');
+let result = numArray.reduce((acc, res) => acc * res);
 
-for (i = 1; i <= 3; i++) {
-	num *= i;
-	console.log(num);
-	console.log(`num pow 3 => ${String(num ** 3).slice(0, 2)} `);
-}
+console.log(result);
+
+console.log(`result pow 3 => ${String(result ** 3).slice(0, 2)}`);
+
