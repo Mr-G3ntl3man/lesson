@@ -1,21 +1,7 @@
-const money = 0,
-	income = 'фриланс',
-	addExpenses = 'интернет, такси, коммуналка',
-	deposit = false,
-	mission = 0,
-	period = 1;
+let num = 266219;
 
-console.log(typeof money);
-
-console.log(typeof income);
-
-console.log(typeof deposit);
-
-console.log(addExpenses.length);
-
-console.log(period === mission);
-
-console.log(addExpenses.toLowerCase().split(''));
-
-const budgetDay = 0;
-console.log(budgetDay);
+for (i = 1; i <= 3; i++) {
+	num *= i;
+	console.log(num);
+	console.log(`num pow 3 => ${String(num ** 3).slice(0, 2)} `);
+}
