@@ -4,7 +4,7 @@ let money = 0,
 	deposit = false,
 	mission = 0,
 	period = 1,
-	budgetDay;
+	budgetDay = money / 30;
 
 console.log(typeof money);
 
@@ -18,5 +18,4 @@ console.log(period === mission);
 
 console.log(addExpenses.toLowerCase().split(','));
 
-budgetDay = 0;
 console.log(budgetDay);
