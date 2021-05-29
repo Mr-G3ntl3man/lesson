@@ -1,6 +1,6 @@
 let num = 266219;
 let numArray = num.toString().split('');
-let result = numArray.reduce((acc, res) => acc * res);
+let result = numArray.reduce((total, num) => total * num);
 
 console.log(result);
 
