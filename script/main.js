@@ -39,7 +39,6 @@ let expenses1 = prompt('Введите обязательную статью р�
 
 mission /= budgetMonth;
 
-
 budgetDay = budgetMonth / 30;
 
 console.log(`budgetMonth => ${budgetMonth}`);
