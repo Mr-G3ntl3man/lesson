@@ -57,11 +57,3 @@ if (budgetDay >= 1200) {
 } else {
 	console.log('Что то пошло не так');
 }
-
-
-
-
-
-
-
-
