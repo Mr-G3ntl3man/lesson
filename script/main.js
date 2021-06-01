@@ -16,7 +16,6 @@ const income = 'фриланс',
 	budgetDay = budgetMonth / 30;
 
 
-
 console.log(typeof money);
 
 console.log(typeof income);
