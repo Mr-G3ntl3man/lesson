@@ -1,8 +1,7 @@
 "use strict";
 
-let mission = 300000;
-
 const income = 'фриланс',
+	mission = 300000,
 	period = 1,
 	money = +prompt('Ваш месячный доход?', '100000'),
 	addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.',
@@ -13,9 +12,9 @@ const income = 'фриланс',
 	expenses2 = prompt('Введите обязательную статью расходов?'),
 	amount2 = +prompt('Во сколько это обойдется?', '100'),
 	budgetMonth = money - (amount1 + amount2),
+	missionMonth = mission / budgetMonth,
 	budgetDay = budgetMonth / 30;
 
-mission /= budgetMonth;
 
 
 console.log(typeof money);
