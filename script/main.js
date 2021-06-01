@@ -8,4 +8,4 @@ const fixString = (arg) => {
 	}
 };
 
-fixString('          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa                ');
+fixString('     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa        ');
