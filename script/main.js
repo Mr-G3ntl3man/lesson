@@ -1,12 +1,11 @@
 'use strict';
 
-let showString = (arg) => {
+const fixString = (arg) => {
 	if (typeof arg === 'string') {
-		const a = arg.trim();
-		(a.length > 30) ? console.log(`${a.substring(0, 30)}...`) : console.log(a);
+		(arg.length > 30) ? console.log(`${arg.trim().substring(0, 30)}...`) : console.log(arg.trim());
 	} else {
-		console.log('Введите строку!');
+		console.log('Ошибка! Функция принимает только строковое значение!');
 	}
 };
 
-showString('       aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa                ');
+fixString('          aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa                ');
