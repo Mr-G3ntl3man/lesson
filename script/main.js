@@ -1,88 +1,24 @@
 'use strict';
 
-function isNumber(n) {
-	return !isNaN(parseFloat(n)) && isFinite(n);
-}
+const arr = [2222, 333333, 444444, 555555, 222222, 555555, 444444];
 
-let money,
-	expenses = [];
-
-
-const start = () => {
-	do {
-		money = +prompt('Ваш месячный доход?', '100000');
-	} while (!isNumber(money));
-	return money;
-};
-start();
+arr.forEach((el) => {
+	if (el.toString().startsWith('2') || el.toString().startsWith('4')) { console.log(el); }
+});
 
 
-const income = 'фриланс',
-	period = 1,
-	mission = 300000,
-	addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.',
-		'Квартплата, проездной, кредит'),
-	deposit = confirm('Есть ли у вас депозит в банке?'),
-	expensesAmount = getExpensesMonth(),
-	accumulatedMonth = getAccumulatedMonth(money),
-	missionMonth = mission / accumulatedMonth,
-	budgetDay = accumulatedMonth / 30;
 
 
-const showTypeOf = (data) => {
-	console.log(data, typeof (data));
-};
+for (let i = 2; i <= 100; i++) {
+	let isPrime = true;
 
-
-function getExpensesMonth() {
-	let sum = 0;
-
-	for (let i = 0; i < 2; i++) {
-		expenses[i] = prompt('Введите обязательную статью расходов?');
-
-		do {
-			sum += +prompt('Во сколько это обойдется?', '100');
-		} while (!isNumber(sum));
+	for (let j = 2; j < i; j++) {
+		if (i % j === 0 && i !== j) {
+			isPrime = false;
+		}
 	}
-	return sum;
-}
-
-function getAccumulatedMonth(money) {
-	return money - expensesAmount;
-}
-
-function getTargetMonth(val) {
-	const res = val / accumulatedMonth;
-	if (res < 0) {
-		return `Цель не будет достигнута`;
-	} else {
-		return `Цель будет достигнута ${Math.ceil(res)} месяца`;
+	if (isPrime === true) {
+		const n = i % 2 === 0;
+		console.log(`${i} Делители этого числа: 1 и ${i}`);
 	}
 }
-
-const getStatusIncome = (budget) => {
-	if (budget >= 1200) {
-		return ('У вас высокий уровень дохода');
-	} else if (budget >= 600 && budget <= 1200) {
-		return ('У вас средний уровень дохода');
-	} else if (budget <= 600 && budget >= 0) {
-		return ('К сожалению у вас уровень дохода ниже среднего');
-	} else {
-		return ('Что то пошло не так');
-	}
-};
-
-
-
-showTypeOf(money);
-
-console.log(`Расходов за месяц => ${expensesAmount}`);
-
-console.log(addExpenses.toLowerCase().split(','));
-
-console.log(getTargetMonth(mission));
-
-console.log(`Бюджет на день => ${Math.floor(budgetDay)}`);
-
-console.log(`Проверка бюджета => ${getStatusIncome(budgetDay)}`);
-
