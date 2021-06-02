@@ -8,7 +8,6 @@ arr.forEach((el) => {
 
 
 
-
 for (let i = 2; i <= 100; i++) {
 	let isPrime = true;
 
