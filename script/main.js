@@ -17,7 +17,6 @@ for (let i = 2; i <= 100; i++) {
 		}
 	}
 	if (isPrime === true) {
-		const n = i % 2 === 0;
 		console.log(`${i} Делители этого числа: 1 и ${i}`);
 	}
 }
