@@ -16,8 +16,12 @@ const bot = (num, attempts = 10) => {
 		return;
 	} else if (isNum(start)) {
 		if (+start === num) {
-			alert('Поздравляю, Вы угадали!!!');
-			return;
+			let a = confirm('Поздравляю, Вы угадали!!! Хотели бы сыграть еще?');
+			if (a === true) {
+				return bot(num, attempts--);
+			} else {
+				return;
+			}
 		} else if (+start > num) {
 			alert(`Загаданное число меньше, осталось попыток ${attempts}`);
 		} else if (+start < num) {
