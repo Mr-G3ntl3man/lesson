@@ -1,12 +1,16 @@
 'use strict';
 
-function isNumber(n) {
-	return !isNaN(parseFloat(n)) && isFinite(n);
-}
+const income = 'фриланс',
+	period = 1,
+	mission = 300000;
 
 let money,
-	expenses = [];
+	addExpenses = [];
 
+
+const isNumber = (n) => {
+	return !isNaN(parseFloat(n)) && isFinite(n);
+};
 
 const start = () => {
 	do {
@@ -16,49 +20,41 @@ const start = () => {
 };
 start();
 
+const getExpensesMonth = () => {
+	let sum = 0,
+		amount;
 
-const income = 'фриланс',
-	period = 1,
-	mission = 300000,
-	addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую.',
-		'Квартплата, проездной, кредит'),
-	deposit = confirm('Есть ли у вас депозит в банке?'),
-	expensesAmount = getExpensesMonth(),
-	accumulatedMonth = getAccumulatedMonth(money),
+	for (let i = 0; i < 2; i++) {
+		addExpenses[i] = prompt('Введите обязательную статью расходов?');
+
+		do {
+			amount = +prompt('Во сколько это обойдется?', '1000');
+		} while (!isNumber(amount));
+
+		sum += amount;
+	}
+	return sum;
+};
+
+const expensesAmount = getExpensesMonth(),
+	deposit = confirm('Есть ли у вас депозит в банке?');
+
+const getAccumulatedMonth = (money) => {
+	return money - expensesAmount;
+};
+
+const accumulatedMonth = getAccumulatedMonth(money),
 	missionMonth = mission / accumulatedMonth,
 	budgetDay = accumulatedMonth / 30;
 
-
-const showTypeOf = (data) => {
-	console.log(data, typeof (data));
-};
-
-
-function getExpensesMonth() {
-	let sum = 0;
-
-	for (let i = 0; i < 2; i++) {
-		expenses[i] = prompt('Введите обязательную статью расходов?');
-
-		do {
-			sum += +prompt('Во сколько это обойдется?', '100');
-		} while (!isNumber(sum));
-	}
-	return sum;
-}
-
-function getAccumulatedMonth(money) {
-	return money - expensesAmount;
-}
-
-function getTargetMonth(val) {
+const getTargetMonth = (val) => {
 	const res = val / accumulatedMonth;
 	if (res < 0) {
 		return `Цель не будет достигнута`;
 	} else {
 		return `Цель будет достигнута ${Math.ceil(res)} месяца`;
 	}
-}
+};
 
 const getStatusIncome = (budget) => {
 	if (budget >= 1200) {
@@ -72,13 +68,16 @@ const getStatusIncome = (budget) => {
 	}
 };
 
+const showTypeOf = (data) => {
+	console.log(data, typeof (data));
+};
 
 
 showTypeOf(money);
 
 console.log(`Расходов за месяц => ${expensesAmount}`);
 
-console.log(addExpenses.toLowerCase().split(','));
+console.log(addExpenses);
 
 console.log(getTargetMonth(mission));
 
