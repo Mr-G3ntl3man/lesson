@@ -5,7 +5,7 @@ const isNum = (n) => {
 };
 
 const bot = (value) => {
-	let num = value;
+	const num = value;
 
 	const game = () => {
 		let start = prompt('Угадай число от 1 до 100', 50);
