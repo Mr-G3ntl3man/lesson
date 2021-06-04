@@ -4,34 +4,41 @@ const isNum = (n) => {
 	return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-const bot = (num, attempts = 10) => {
-	let start = prompt('Угадай число от 1 до 100', 50);
+const bot = (value, attempts = 10) => {
+	let num = value,
+		count = attempts;
 
-	if (attempts === 0) {
-		alert('Попытки закончились');
-	}
+	const game = () => {
+		let start = prompt('Угадай число от 1 до 100', 50);
 
-	if (start === null) {
-		alert('Игра окончена');
-		return;
-	} else if (isNum(start)) {
-		if (+start === num) {
-			let a = confirm('Поздравляю, Вы угадали!!! Хотели бы сыграть еще?');
-			if (a === true) {
-				return bot(num, attempts--);
-			} else {
-				return;
-			}
-		} else if (+start > num) {
-			alert(`Загаданное число меньше, осталось попыток ${attempts}`);
-		} else if (+start < num) {
-			alert(`Загаданное число больше, осталось попыток ${attempts}`);
+		if (count === 0) {
+			alert('Попытки закончились');
+			return;
 		}
-	} else {
-		alert('Введи число!');
-	}
 
-	return bot(num, attempts--);
+		if (start === null) {
+			alert('Игра окончена');
+			return;
+		} else if (isNum(start)) {
+			if (+start === num) {
+				let a = confirm('Поздравляю, Вы угадали!!! Хотели бы сыграть еще?');
+				if (a === true) {
+					return bot(num, count--);
+				} else {
+					return;
+				}
+			} else if (+start > num) {
+				alert(`Загаданное число меньше, осталось попыток ${count}`);
+			} else if (+start < num) {
+				alert(`Загаданное число больше, осталось попыток ${count}`);
+			}
+		} else {
+			alert('Введи число!');
+		}
+		game();
+	};
+
+	return game();
 };
 
 
