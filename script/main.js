@@ -12,12 +12,18 @@ const bot = (value, attempts = 10) => {
 		let start = prompt('Угадай число от 1 до 100', 50);
 
 		if (count === 0) {
-			alert('Попытки закончились');
-			return;
+			let b = confirm('Попытки закончились. Хотели бы сыграть еще?');
+			if (b === true) {
+				return bot(num, attempts);
+			} else {
+				alert('Игра окончена. Спасибо за игру!');
+				return;
+			}
 		}
 
 		if (start === null) {
 			alert('Игра окончена');
+
 			return;
 		} else if (isNum(start)) {
 			if (+start === num) {
