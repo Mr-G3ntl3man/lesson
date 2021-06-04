@@ -4,29 +4,30 @@ const isNum = (n) => {
 	return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-const bot = (num) => {
-	return () => {
+const bot = (value) => {
+	let num = value;
+
+	const game = () => {
 		let start = prompt('Угадай число от 1 до 100', 50);
 		if (start === null) {
 			alert('Игра окончена');
+			return;
 		} else if (isNum(start)) {
 			if (+start === num) {
 				alert('Поздравляю, Вы угадали!!!');
+				return;
 			} else if (+start > num) {
 				alert('Загаданное число меньше');
-				return foo();
 			} else if (+start < num) {
 				alert('Загаданное число больше');
-				return foo();
 			}
 		} else {
 			alert('Введи число!');
-			return foo();
 		}
-	}
+		game();
+	};
 
+	return game();
 };
 
-const foo = bot(42);
-
-foo();
+bot(42);
