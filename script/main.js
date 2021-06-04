@@ -23,7 +23,6 @@ const bot = (value, attempts = 10) => {
 
 		if (start === null) {
 			alert('Игра окончена');
-
 			return;
 		} else if (isNum(start)) {
 			if (+start === num) {
