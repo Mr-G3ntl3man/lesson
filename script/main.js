@@ -23,7 +23,7 @@ const bot = (value, attempts = 10) => {
 			if (+start === num) {
 				let a = confirm('Поздравляю, Вы угадали!!! Хотели бы сыграть еще?');
 				if (a === true) {
-					return bot(num, count--);
+					return bot(num, count = 10);
 				} else {
 					return;
 				}
@@ -35,7 +35,8 @@ const bot = (value, attempts = 10) => {
 		} else {
 			alert('Введи число!');
 		}
-		game();
+
+		game(count--);
 	};
 
 	return game();
