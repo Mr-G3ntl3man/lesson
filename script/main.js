@@ -22,21 +22,46 @@ const appData = {
 	budgetMonth: 0,
 	expensesMonth: 0,
 	mission: 300000,
+	deposit: false,
+	percentDeposit: 0,
+	moneyDeposit: 0,
+	period: 5,
+	income: {},
 	expenses: {},
+	addExpenses: [],
 
 	asking() {
 		let costAmount,
-			addExpenses;
+			expenses,
+			itemIncome,
+			cashIncome,
+			possibleExpenses;
+
+		possibleExpenses = prompt('Перечислите возможные расходы?', 'Пить, кушать, гулять');
+		this.addExpenses.push(possibleExpenses.toLowerCase().split(','));
+
+		if (confirm('Если ли у вас доп. заработок?')) {
+			do {
+				itemIncome = prompt('Какой у вас дополнительный заработок?', 'Попрошайничаю');
+			} while (isNumber(itemIncome));
+
+			do {
+				cashIncome = prompt('Сколько зарабатываете на это?', 100);
+			} while (!isNumber(cashIncome));
+
+			this.income[itemIncome] = cashIncome;
+		}
 
 		for (let i = 0; i < 2; i++) {
-			addExpenses = prompt('Введите обязательную статью расходов?');
+			do {
+				expenses = prompt('Введите обязательную статью расходов?');
+			} while (isNumber(expenses))
 
 			do {
 				costAmount = +prompt('Во сколько это обойдется?', '1000');
 			} while (!isNumber(costAmount));
 
-			this.expenses[addExpenses] = costAmount;
-
+			this.expenses[expenses] = costAmount;
 		}
 	},
 
@@ -49,36 +74,57 @@ const appData = {
 	},
 
 	getBudget() {
-		return this.budget - this.getExpensesMonth();
+		const result = this.budget - this.getExpensesMonth(),
+			budget = Math.floor(result / 30);
+
+		this.budgetMonth = result;
+		this.budgetDay = budget;
 	},
 
 	getTargetMonth() {
-		const ressult = this.mission / this.getBudget();
-		if (ressult < 0) {
+		const result = this.mission / this.budgetMonth;
+		if (result < 0) {
 			return `Цель не будет достигнута`;
 		} else {
-			return `Цель будет достигнута ${Math.ceil(ressult)} месяцев (-а)`;
+			return `Цель будет достигнута ${Math.ceil(result)} месяцев (-а)`;
 		}
 	},
 
 	getStatusIncome() {
-		const budget = this.getBudget() / 30;
-		if (budget >= 1200) {
+		if (this.budgetDay >= 1200) {
 			return ('У вас высокий уровень дохода');
-		} else if (budget >= 600 && budget <= 1200) {
+		} else if (this.budgetDay >= 600 && this.budgetDay <= 1200) {
 			return ('У вас средний уровень дохода');
-		} else if (budget <= 600 && budget >= 0) {
+		} else if (this.budgetDay <= 600 && this.budgetDay >= 0) {
 			return ('К сожалению у вас уровень дохода ниже среднего');
 		} else {
 			return ('Что то пошло не так');
 		}
 	},
 
+	getInfoDeposit() {
+		this.deposit = confirm('Есть ли у вас депозит в банке?');
+
+		if (this.deposit) {
+			do {
+				this.percentDeposit = prompt('Какой годовой процент?', 42);
+			} while (!isNumber(this.percentDeposit));
+
+			do {
+				this.moneyDeposit = prompt('Какая сумма заложена?', 42000);
+			} while (!isNumber(this.moneyDeposit));
+		}
+	},
+	calcSaveMoney() {
+		return this.budgetMonth * this.period;
+	},
 }
 
 appData.asking();
 appData.getBudget();
 appData.getTargetMonth();
+appData.getInfoDeposit();
+appData.calcSaveMoney();
 
 
 console.log(`Расходов за месяц => ${appData.getExpensesMonth()}`);
@@ -87,4 +133,10 @@ console.log(appData.getTargetMonth());
 
 console.log(`Уровень дохода => ${appData.getStatusIncome()}`);
 
-for (let key in appData) { console.log(`Наша программа включает в себя данные: Свойсво => ${key}  Значение => ${appData[key]}`); }
+
+const newExpenses = String(appData.addExpenses).split(', ').map(el => el[0].toUpperCase() + el.substring(1)).join(', ');
+
+console.log(newExpenses)
+
+
+// for (let key in appData) { console.log(`Наша программа включает в себя данные: Свойсво => ${key}  Значение => ${appData[key]}`); }
