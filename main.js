@@ -24,13 +24,3 @@ liBook[4].after(liBook[5]);
 liBook[9].after(liBook[2]);
 
 liBook[25].innerHTML = '<li>Глава 8: За пределами ES6</li>';
-
-
-
-
-
-
-
-
-
-
