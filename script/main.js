@@ -1,5 +1,25 @@
 'use strict';
 
+const btnResult = document.getElementById('start'),
+	btnIncome = document.getElementsByTagName('button')[0],
+	btnExpenses = document.getElementsByTagName('button')[1],
+	checkDeposit = document.querySelector('#deposit-check'),
+	incomeItem = document.querySelectorAll('.additional_income-item'),
+	resultBudgetDay = document.getElementsByClassName('result-budget_day')[0],
+	resultExpensesMonth = document.getElementsByClassName('result-expenses_month')[0],
+	resultAdditionalIncome = document.getElementsByClassName('result-additional_income')[0],
+	resultAdditionalExpenses = document.getElementsByClassName('result-additional_expenses')[0],
+	resultIncomePeriod = document.getElementsByClassName('result-income_period')[0],
+	resultTargetMonth = document.getElementsByClassName('result-target_month')[0],
+	salary = document.querySelector('.salary-amount'),
+	incomeName = document.querySelector('input.income-title'),
+	incomeAmount = document.querySelector('.income-amount'),
+	expensesName = document.querySelector('input.expenses-title'),
+	expensesAmount = document.querySelector('.expenses-amount'),
+	additionalItem = document.querySelector('.additional_expenses-item'),
+	targetAmount = document.querySelector('.target-amount'),
+	periodSelect = document.querySelector('.period-select');
+
 let money;
 
 const isNumber = (n) => {
@@ -140,26 +160,6 @@ console.log(newExpenses);
 
 // for (let key in appData) { console.log(`Наша программа включает в себя данные: Свойсво => ${key}  Значение => ${appData[key]}`); }
 
-
-const btnResult = document.getElementById('start'),
-	btnIncome = document.getElementsByTagName('button')[0],
-	btnExpenses = document.getElementsByTagName('button')[1],
-	checkDeposit = document.querySelector('#deposit-check'),
-	incomeItem = document.querySelectorAll('.additional_income-item'),
-	resultBudgetDay = document.getElementsByClassName('result-budget_day')[0],
-	resultExpensesMonth = document.getElementsByClassName('result-expenses_month')[0],
-	resultAdditionalIncome = document.getElementsByClassName('result-additional_income')[0],
-	resultAdditionalExpenses = document.getElementsByClassName('result-additional_expenses')[0],
-	resultIncomePeriod = document.getElementsByClassName('result-income_period')[0],
-	resultTargetMonth = document.getElementsByClassName('result-target_month')[0],
-	salary = document.querySelector('.salary-amount'),
-	incomeName = document.querySelector('input.income-title'),
-	incomeAmount = document.querySelector('.income-amount'),
-	expensesName = document.querySelector('input.expenses-title'),
-	expensesAmount = document.querySelector('.expenses-amount'),
-	additionalItem = document.querySelector('.additional_expenses-item'),
-	targetAmount = document.querySelector('.target-amount'),
-	periodSelect = document.querySelector('.period-select');
 
 
 
