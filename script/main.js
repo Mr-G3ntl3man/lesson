@@ -44,4 +44,8 @@ document.body.style.cssText = `
 	font-weight: 700;
 	height: 100vh;
 `;
+
 document.body.insertAdjacentHTML("beforeend", `<div>Сегодня ${today.slice(0, -2)}год, ${fixName(hour, nameHours)} ${fixName(minute, nameMinute)} ${fixName(second, nameSeconds)}</div>`)
+setInterval(() => {
+
+}, 1);
