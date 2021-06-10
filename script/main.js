@@ -91,7 +91,7 @@ const appData = {
 				cashExpenses = el.querySelector('.expenses-amount').value;
 
 			if (itemExpenses !== '' && cashExpenses !== '') { this.expenses[itemExpenses] = cashExpenses }
-		});
+		}.bind(appData));
 	},
 
 	getIncome() {
@@ -100,7 +100,7 @@ const appData = {
 				cashIncome = el.querySelector('.income-amount').value;
 
 			if (itemsIncome !== '' && cashIncome !== '') { this.income[itemsIncome] = cashIncome }
-		});
+		}.bind(appData));
 
 		for (let key in this.income) {
 			this.incomeMonth += +this.income[key];
@@ -112,14 +112,14 @@ const appData = {
 		anyExpenses.forEach(function (el) {
 			el = el.trim();
 			if (el !== '') { this.addExpenses.push(el) }
-		})
+		}.bind(appData))
 	},
 
 	getAddIncome() {
-		incomeItem.forEach((el) => {
+		incomeItem.forEach(function (el) {
 			const elValue = el.value.trim();
 			if (elValue !== '') { this.addIncome.push(elValue) }
-		});
+		}.bind(appData));
 	},
 
 	getExpensesMonth() {
