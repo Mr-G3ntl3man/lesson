@@ -23,3 +23,11 @@ btn.addEventListener('click', () => {
 	htmlHexCode.style.color = hexCode;
 	btn.style.backgroundColor = hexCode;
 })
+
+
+
+
+
+
+
+
