@@ -62,7 +62,7 @@ const appData = {
 		resultTargetMonth.value = this.getTargetMonth();
 		resultIncomePeriod.value = this.calcSaveMoney();
 
-		periodSelect.addEventListener('input', function () { resultIncomePeriod.value = this.budgetMonth * periodSelect.value; });
+		periodSelect.addEventListener('input', function () { resultIncomePeriod.value = this.budgetMonth * periodSelect.value }.bind(appData));
 	},
 
 	addExpensesBlock() {
