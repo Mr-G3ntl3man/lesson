@@ -41,16 +41,15 @@ const appData = {
 	addIncome: [],
 
 	start() {
-		appData.budget = +salary.value;
-
-		appData.getExpenses();
-		appData.getIncome();
-		appData.getTargetMonth();
-		appData.getAddExpenses();
-		appData.calcSaveMoney();
-		appData.getAddIncome();
-		appData.getBudget();
-		appData.showResult();
+		this.budget = +salary.value;
+		this.getExpenses();
+		this.getIncome();
+		this.getTargetMonth();
+		this.getAddExpenses();
+		this.calcSaveMoney();
+		this.getAddIncome();
+		this.getBudget();
+		this.showResult();
 	},
 
 	showResult() {
@@ -62,7 +61,7 @@ const appData = {
 		resultTargetMonth.value = this.getTargetMonth();
 		resultIncomePeriod.value = this.calcSaveMoney();
 
-		periodSelect.addEventListener('input', function () { resultIncomePeriod.value = this.budgetMonth * periodSelect.value; });
+		periodSelect.addEventListener('input', function () { resultIncomePeriod.value = this.budgetMonth * periodSelect.value }.bind(appData));
 	},
 
 	addExpensesBlock() {
@@ -157,7 +156,7 @@ btnResult.addEventListener('click', function () {
 	} else if (!isNumber(salary.value)) {
 		salary.style.border = '2px solid red';
 	} else {
-		appData.start();
+		appData.start.call(appData);
 		salary.style.border = '1px solid #ff7f63';
 		btnResult.style.opacity = '0.5';
 		btnResult.style.cursor = 'default';
