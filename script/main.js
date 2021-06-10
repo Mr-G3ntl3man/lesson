@@ -3,11 +3,36 @@
 
 const nameHours = ['час', 'часов', 'часа'],
 	nameMinute = ['минута', 'минуты', 'минут'],
-	nameSeconds = ['секунда', 'секунды', 'секунд'];
+	nameSeconds = ['секунда', 'секунды', 'секунд'],
+	divD = document.createElement('div'),
+	divN = document.createElement('div');
 
-const checkTime = (i) => {
-	if (i < 10) { i = "0" + i; }
-	return i;
+document.body.appendChild(divD);
+document.body.appendChild(divN);
+
+document.body.style.cssText = `
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	font-size: 60px;
+	color: rgb(182, 0, 0);
+	font-weight: 700;
+	height: 100vh;
+	
+`;
+
+const options = {
+	weekday: 'long',
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+};
+
+const optionsNum = {
+	year: 'numeric',
+	month: 'numeric',
+	day: 'numeric',
 };
 
 const fixName = (value, arr) => {
@@ -20,32 +45,25 @@ const fixName = (value, arr) => {
 	return `${value} ${arr[2]}`;
 };
 
-
-const options = {
-	weekday: 'long',
-	year: 'numeric',
-	month: 'long',
-	day: 'numeric',
+const createZero = (i) => {
+	if (i < 10) { i = "0" + i; }
+	return i;
 };
 
-const date = new Date(),
-	today = date.toLocaleDateString('ru', options),
-	hour = checkTime(date.getHours()),
-	minute = checkTime(date.getMinutes()),
-	second = checkTime(date.getSeconds());
 
+const resultDate = () => {
+	const date = new Date(),
+		today = date.toLocaleDateString('ru', options),
+		todayNum = date.toLocaleDateString('ru', optionsNum),
+		hour = createZero(date.getHours()),
+		minute = createZero(date.getMinutes()),
+		second = createZero(date.getSeconds());
 
-document.body.style.cssText = `
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 60px;
-	color: rgb(182, 0, 0);
-	font-weight: 700;
-	height: 100vh;
-`;
+	const resultFullDate = `Сегодня ${today.slice(0, -2)}год, ${fixName(hour, nameHours)} ${fixName(minute, nameMinute)} ${fixName(second, nameSeconds)}`,
+		resultNumDate = `${todayNum.slice(0)} - ${hour}:${minute}:${second}`;
 
-document.body.insertAdjacentHTML("beforeend", `<div>Сегодня ${today.slice(0, -2)}год, ${fixName(hour, nameHours)} ${fixName(minute, nameMinute)} ${fixName(second, nameSeconds)}</div>`)
-setInterval(() => {
+	divD.innerHTML = resultFullDate;
+	divN.innerHTML = resultNumDate;
+}
 
-}, 1);
+setInterval(resultDate, 1000);
