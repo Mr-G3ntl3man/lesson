@@ -22,6 +22,10 @@ const btnResult = document.getElementById('start'),
 let expensesItem = document.querySelectorAll('.expenses-items'),
 	incomeAmountItems = document.querySelectorAll('.income-items');
 
+const isNumber = function (n) {
+	return !isNaN(parseFloat(n)) && isFinite(n);
+};
+
 const appData = {
 	budget: 0,
 	budgetDay: 0,
@@ -58,7 +62,7 @@ const appData = {
 		resultTargetMonth.value = this.getTargetMonth();
 		resultIncomePeriod.value = this.calcSaveMoney();
 
-		periodSelect.addEventListener('input', () => { resultIncomePeriod.value = this.budgetMonth * periodSelect.value; });
+		periodSelect.addEventListener('input', function () { resultIncomePeriod.value = this.budgetMonth * periodSelect.value; });
 	},
 
 	addExpensesBlock() {
@@ -82,7 +86,7 @@ const appData = {
 	},
 
 	getExpenses() {
-		expensesItem.forEach((el) => {
+		expensesItem.forEach(function (el) {
 			let itemExpenses = el.querySelector('.expenses-title').value,
 				cashExpenses = el.querySelector('.expenses-amount').value;
 
@@ -91,7 +95,7 @@ const appData = {
 	},
 
 	getIncome() {
-		incomeAmountItems.forEach((el) => {
+		incomeAmountItems.forEach(function (el) {
 			let itemsIncome = el.querySelector('input.income-title').value,
 				cashIncome = el.querySelector('.income-amount').value;
 
@@ -105,7 +109,7 @@ const appData = {
 
 	getAddExpenses() {
 		const anyExpenses = additionalItem.value.split(',');
-		anyExpenses.forEach((el) => {
+		anyExpenses.forEach(function (el) {
 			el = el.trim();
 			if (el !== '') { this.addExpenses.push(el) }
 		})
@@ -146,18 +150,22 @@ const appData = {
 
 btnExpenses.addEventListener('click', appData.addExpensesBlock);
 btnIncome.addEventListener('click', appData.addIncomeBlock);
-periodSelect.addEventListener('input', () => { document.querySelector('.period-amount').innerHTML = periodSelect.value; });
-btnResult.addEventListener('click', () => {
-	if (salary.value === '') { alert('Поле "Месячный доход" обязательно!'); return }
-	appData.start();
+periodSelect.addEventListener('input', function () { document.querySelector('.period-amount').innerHTML = periodSelect.value; });
+btnResult.addEventListener('click', function () {
+	if (salary.value === '') {
+		salary.style.border = '2px solid red';
+	} else if (!isNumber(salary.value)) {
+		salary.style.border = '2px solid red';
+	} else {
+		appData.start();
+		salary.style.border = '1px solid #ff7f63';
+		btnResult.style.opacity = '0.5';
+		btnResult.style.cursor = 'default';
+		btnResult.disabled = true;
+	}
 });
 
 
-
-
-// const isNumber = (n) => {
-// 	return !isNaN(parseFloat(n)) && isFinite(n);
-// };
 
 
 
