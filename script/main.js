@@ -17,7 +17,9 @@ const btnResult = document.getElementById('start'),
 	expensesName = document.querySelector('input.expenses-title'),
 	additionalItem = document.querySelector('.additional_expenses-item'),
 	targetAmount = document.querySelector('.target-amount'),
-	periodSelect = document.querySelector('.period-select');
+	periodSelect = document.querySelector('.period-select'),
+	allInputRus = document.querySelectorAll('.data input[placeholder=Наименование]'),
+	allInputNum = document.querySelectorAll('.data input[placeholder=Сумма]');
 
 let expensesItem = document.querySelectorAll('.expenses-items'),
 	incomeAmountItems = document.querySelectorAll('.income-items');
@@ -66,7 +68,9 @@ const appData = {
 	},
 
 	addExpensesBlock() {
-		const cloneExpensesItem = expensesItem[0].cloneNode(true);
+		let cloneExpensesItem = expensesItem[0].cloneNode(true);
+
+		cloneExpensesItem.querySelectorAll('input').forEach(function (el) { el.value = '' });
 
 		expensesItem[0].parentNode.insertBefore(cloneExpensesItem, btnExpenses);
 
@@ -77,6 +81,8 @@ const appData = {
 
 	addIncomeBlock() {
 		const cloneIncomeItem = incomeAmountItems[0].cloneNode(true);
+
+		cloneIncomeItem.querySelectorAll('input').forEach(function (el) { el.value = '' });
 
 		incomeAmountItems[0].parentNode.insertBefore(cloneIncomeItem, btnIncome);
 
@@ -95,6 +101,8 @@ const appData = {
 	},
 
 	getIncome() {
+
+
 		incomeAmountItems.forEach(function (el) {
 			let itemsIncome = el.querySelector('input.income-title').value,
 				cashIncome = el.querySelector('.income-amount').value;
@@ -148,6 +156,7 @@ const appData = {
 	},
 };
 
+
 btnExpenses.addEventListener('click', appData.addExpensesBlock);
 btnIncome.addEventListener('click', appData.addIncomeBlock);
 periodSelect.addEventListener('input', function () { document.querySelector('.period-amount').innerHTML = periodSelect.value; });
@@ -166,11 +175,17 @@ btnResult.addEventListener('click', function () {
 });
 
 
+allInputRus.forEach(function (el) {
+	el.addEventListener('keyup', function () {
+		this.value = this.value.replace(/[^а-я , А-Я]/g, '');
+	});
+});
 
-
-
-
-
+allInputNum.forEach(function (el) {
+	el.addEventListener('keyup', function () {
+		this.value = this.value.replace(/[^\d]/g, '');
+	});
+});
 
 
 
