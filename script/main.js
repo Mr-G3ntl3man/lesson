@@ -205,24 +205,3 @@ AppData.prototype.eventsListeners = function () {
 const appData = new AppData();
 appData.validRusNum();
 appData.eventsListeners();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
