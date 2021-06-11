@@ -202,13 +202,19 @@ AppData.prototype.eventsListeners = function () {
 	periodSelect.addEventListener('input', function () { document.querySelector('.period-amount').innerHTML = periodSelect.value; });
 };
 
-
-
-
-
 const appData = new AppData();
 appData.validRusNum();
 appData.eventsListeners();
+
+
+
+
+
+
+
+
+
+
 
 
 
