@@ -48,3 +48,7 @@ newElem.height = 500;
 newElem.fontSize = 50;
 newElem.text = 'Жду правки! ^_^'
 newElem.start()
+
+
+
+
