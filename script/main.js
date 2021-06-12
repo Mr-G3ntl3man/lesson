@@ -7,6 +7,8 @@ const DomElement = function () {
 	this.fontSize;
 	this.selector;
 	this.text;
+	this.position;
+
 }
 
 DomElement.prototype.start = function () {
@@ -31,7 +33,11 @@ DomElement.prototype.addStyle = function () {
 	background-color: ${this.bg};
 	width: ${this.width}px;
 	height: ${this.height}px;
-	font-size: ${this.fontSize}px;`
+	font-size: ${this.fontSize}px;
+	position: ${this.position};
+	top: 0;
+	left: 0;
+	`
 };
 
 DomElement.prototype.addText = function () {
@@ -43,11 +49,28 @@ DomElement.prototype.addText = function () {
 const newElem = new DomElement();
 newElem.selector = '#new-block';
 newElem.bg = '#049D03';
-newElem.width = 500;
-newElem.height = 500;
-newElem.fontSize = 50;
+newElem.width = 100;
+newElem.height = 100;
+newElem.fontSize = 18;
+newElem.position = 'absolute';
 newElem.text = 'Жду правки! ^_^'
-newElem.start()
+
+
+document.addEventListener('DOMContentLoaded', () => {
+	newElem.start()
+
+	document.addEventListener('keydown', (event) => {
+		const elem = document.querySelector(`${newElem.selector}`)
+
+		switch (event.key) {
+			case "ArrowLeft": elem.style.left = parseInt(elem.style.left) - 10 + 'px'; break;
+			case "ArrowRight": elem.style.left = parseInt(elem.style.left) + 10 + 'px'; break;
+			case "ArrowUp": elem.style.top = parseInt(elem.style.top) - 10 + 'px'; break;
+			case "ArrowDown": elem.style.top = parseInt(elem.style.top) + 10 + 'px'; break;
+		}
+	})
+})
+
 
 
 
