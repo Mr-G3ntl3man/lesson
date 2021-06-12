@@ -51,7 +51,6 @@ const AppData = function () {
 
 AppData.prototype.start = function () {
 	this.budget = +salary.value;
-	this.valid();
 	this.getExpenses();
 	this.getIncome();
 	this.getTargetMonth();
@@ -80,7 +79,7 @@ AppData.prototype.addExpensesBlock = function () {
 	expensesItem = document.querySelectorAll('.expenses-items');
 
 	if (expensesItem.length === 3) { btnExpenses.style.display = 'none' }
-	if (expensesItem.length) { AppData.prototype.validRusNum() }
+	if (expensesItem.length) { this.validRusNum() }
 };
 
 AppData.prototype.addIncomeBlock = function () {
@@ -90,7 +89,7 @@ AppData.prototype.addIncomeBlock = function () {
 	incomeAmountItems = document.querySelectorAll('.income-items');
 
 	if (incomeAmountItems.length === 3) { btnIncome.style.display = 'none' }
-	if (incomeAmountItems.length) { AppData.prototype.validRusNum() }
+	if (incomeAmountItems.length) { this.validRusNum() }
 };
 
 AppData.prototype.getExpenses = function () {
@@ -171,6 +170,7 @@ AppData.prototype.valid = function () {
 	} else {
 		this.start();
 		salary.style.border = '1px solid #ff7f63';
+		allInputLeft = document.querySelectorAll('.data input[type=text]');
 		allInputLeft.forEach(function (el) { el.setAttribute("disabled", "disabled") });
 		btnResult.style.display = 'none';
 		btnReset.style.display = 'block';
@@ -183,25 +183,26 @@ AppData.prototype.validRusNum = function () {
 
 	allInputRus.forEach(function (el) {
 		el.addEventListener('keyup', function () {
-			this.value = this.value.replace(/[^а-я , А-Я]/g, '');
+			el.value = el.value.replace(/[^а-я , А-Я]/g, '');
 		});
 	});
 
 	allInputNum.forEach(function (el) {
 		el.addEventListener('keyup', function () {
-			this.value = this.value.replace(/[^\d]/g, '');
+			el.value = el.value.replace(/[^\d]/g, '');
 		});
 	});
 };
 
 AppData.prototype.eventsListeners = function () {
-	btnReset.addEventListener('click', this.reset);
-	btnResult.addEventListener('click', this.valid);
-	btnIncome.addEventListener('click', this.addIncomeBlock);
-	btnExpenses.addEventListener('click', this.addExpensesBlock);
+	this.validRusNum();
+	btnReset.addEventListener('click', this.reset.bind(this));
+	btnResult.addEventListener('click', this.valid.bind(this));
+	btnIncome.addEventListener('click', this.addIncomeBlock.bind(this));
+	btnExpenses.addEventListener('click', this.addExpensesBlock.bind(this));
 	periodSelect.addEventListener('input', function () { document.querySelector('.period-amount').innerHTML = periodSelect.value; });
 };
 
+
 const appData = new AppData();
-appData.validRusNum();
 appData.eventsListeners();
