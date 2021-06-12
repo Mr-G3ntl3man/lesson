@@ -50,15 +50,27 @@ const AppData = function () {
 };
 
 AppData.prototype.start = function () {
-	this.budget = +salary.value;
-	this.getExpenses();
-	this.getIncome();
-	this.getTargetMonth();
-	this.getAddExpenses();
-	this.calcSaveMoney();
-	this.getAddIncome();
-	this.getBudget();
-	this.showResult();
+	if (salary.value === '') {
+		salary.style.border = '2px solid red';
+	} else if (!isNumber(salary.value)) {
+		salary.style.border = '2px solid red';
+	} else {
+		allInputLeft = document.querySelectorAll('.data input[type=text]');
+		allInputLeft.forEach(function (el) { el.setAttribute("disabled", "disabled") });
+		salary.style.border = '1px solid #ff7f63';
+		btnResult.style.display = 'none';
+		btnReset.style.display = 'block';
+
+		this.budget = +salary.value;
+		this.getExpenses();
+		this.getIncome();
+		this.getTargetMonth();
+		this.getAddExpenses();
+		this.calcSaveMoney();
+		this.getAddIncome();
+		this.getBudget();
+		this.showResult();
+	}
 };
 
 AppData.prototype.showResult = function () {
@@ -162,21 +174,6 @@ AppData.prototype.reset = function () {
 	btnResult.style.display = 'block';
 };
 
-AppData.prototype.valid = function () {
-	if (salary.value === '') {
-		salary.style.border = '2px solid red';
-	} else if (!isNumber(salary.value)) {
-		salary.style.border = '2px solid red';
-	} else {
-		this.start();
-		salary.style.border = '1px solid #ff7f63';
-		allInputLeft = document.querySelectorAll('.data input[type=text]');
-		allInputLeft.forEach(function (el) { el.setAttribute("disabled", "disabled") });
-		btnResult.style.display = 'none';
-		btnReset.style.display = 'block';
-	}
-};
-
 AppData.prototype.validRusNum = function () {
 	allInputNum = document.querySelectorAll('.data input[placeholder=Сумма]');
 	allInputRus = document.querySelectorAll('.data input[placeholder=Наименование]');
@@ -197,7 +194,7 @@ AppData.prototype.validRusNum = function () {
 AppData.prototype.eventsListeners = function () {
 	this.validRusNum();
 	btnReset.addEventListener('click', this.reset.bind(this));
-	btnResult.addEventListener('click', this.valid.bind(this));
+	btnResult.addEventListener('click', this.start.bind(this));
 	btnIncome.addEventListener('click', this.addIncomeBlock.bind(this));
 	btnExpenses.addEventListener('click', this.addExpensesBlock.bind(this));
 	periodSelect.addEventListener('input', function () { document.querySelector('.period-amount').innerHTML = periodSelect.value; });
