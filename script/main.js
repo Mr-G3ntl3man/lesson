@@ -1,12 +1,19 @@
 'use strict';
 
-const DomElement = function () {
-	this.bg;
-	this.width;
-	this.height;
-	this.fontSize;
-	this.selector;
-	this.text;
+const DomElement = function (
+	selector = '#new-block',
+	height = 500,
+	width = 500,
+	bg = '#049D03',
+	fontSize = 50,
+	text = 'Нужно больше правок!',
+) {
+	this.selector = selector;
+	this.width = width;
+	this.height = height;
+	this.bg = bg;
+	this.fontSize = fontSize;
+	this.text = text;
 }
 
 DomElement.prototype.start = function () {
@@ -29,9 +36,9 @@ DomElement.prototype.addStyle = function () {
 	const elem = document.querySelector(`${this.selector}`)
 	elem.style.cssText = `
 	background-color: ${this.bg};
-	width: ${this.width}px;
-	height: ${this.height}px;
-	font-size: ${this.fontSize}px;`
+	width: ${parseInt(this.width)}px;
+	height: ${parseInt(this.height)}px;
+	font-size: ${parseInt(this.fontSize)}px;`
 };
 
 DomElement.prototype.addText = function () {
@@ -40,15 +47,8 @@ DomElement.prototype.addText = function () {
 }
 
 
-const newElem = new DomElement();
-newElem.selector = '#new-block';
-newElem.bg = '#049D03';
-newElem.width = 500;
-newElem.height = 500;
-newElem.fontSize = 50;
-newElem.text = 'Жду правки! ^_^'
+const newElem = new DomElement('#block', '100px', '300px', 'red', '30px');
 newElem.start()
-
 
 
 
