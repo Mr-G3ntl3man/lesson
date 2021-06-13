@@ -64,7 +64,7 @@ body {
 	left: 0;
 	z-index: 5;
 
-	background-color: rgb(50, 24, 145);
+	background-color: rgb(24, 0, 110);
 	box-shadow: 0 2px 4px rgba(44, 62, 80, 0.15);
 	border-bottom-right-radius: 10px;
 	border-bottom-left-radius: 10px;
@@ -117,6 +117,10 @@ body {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 }
+.header-button:hover {
+	transform: scale(1.2);
+	transition: transform 0.2s ease-in;
+}
 
 .todo {
 	width: 100%;
@@ -154,15 +158,21 @@ body {
 	position: absolute;
 	top: 0;
 	right: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-right: 20px;
 }
 
 .todo-buttons button {
-	width: 50px;
-	height: 50px;
+	width: 40px;
+	height: 40px;
 	float: left;
+
 	background-color: transparent;
 	background-position: center;
 	background-repeat: no-repeat;
+	background-size: cover;
 	position: relative;
 	border: 0;
 	box-shadow: none;
@@ -185,15 +195,31 @@ body {
 }
 
 .todo-remove {
-	background-image: url("../img/trash.png");
+	background-image: url("../img/delete.svg");
+	transition: transform 0.2s ease-in;
+}
+
+.todo-remove:hover {
+	transform: scale(1.2);
+	transition: transform 0.2s ease-in;
+}
+.todo-complete:hover {
+	transform: scale(1.2);
+	transition: transform 0.2s ease-in;
 }
 
 .todo-complete {
-	background-image: url("../img/uncheck.png");
+	background-image: url("../img/check-mark.svg");
+	transition: transform 0.2s ease-in;
 }
 
 .todo-completed .todo-complete {
-	background-image: url("../img/check.png");
+	background-image: url("../img/check.svg");
+	transition: transform 0.2s ease-in;
+}
+.todo-completed .todo-complete:hover {
+	transform: scale(1.2);
+	transition: transform 0.2s ease-in;
 }
 
 .todo-completed {
