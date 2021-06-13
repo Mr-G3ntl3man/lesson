@@ -102,7 +102,7 @@ body {
 .header-button {
 	width: 51px;
 	height: 51px;
-	background: transparent url("img/plus1.svg") no-repeat center/cover;
+	background: transparent url("../img/plus1.svg") no-repeat center/cover;
 	position: absolute;
 	top: 14px;
 	right: 14px;
@@ -195,7 +195,7 @@ body {
 }
 
 .todo-remove {
-	background-image: url("img/delete.svg");
+	background-image: url("../img/delete.svg");
 	transition: transform 0.2s ease-in;
 }
 
@@ -209,12 +209,12 @@ body {
 }
 
 .todo-complete {
-	background-image: url("img/check-mark.svg");
+	background-image: url("../img/check-mark.svg");
 	transition: transform 0.2s ease-in;
 }
 
 .todo-completed .todo-complete {
-	background-image: url("img/check.svg");
+	background-image: url("../img/check.svg");
 	transition: transform 0.2s ease-in;
 }
 .todo-completed .todo-complete:hover {
