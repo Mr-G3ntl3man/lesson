@@ -120,6 +120,9 @@ class AppData {
 
 			if (itemsIncome !== '' && cashIncome !== '') { this.income[itemsIncome] = cashIncome }
 		});
+		for (let key in this.income) {
+			this.incomeMonth += +this.income[key];
+		}
 	}
 
 	getAddExpenses() {
