@@ -60,8 +60,7 @@ class AppData {
 			btnReset.style.display = 'block';
 
 			this.budget = +salary.value;
-			this.getExpenses();
-			this.getIncome();
+			this.getExpInc();
 			this.getTargetMonth();
 			this.getAddExpenses();
 			this.calcSaveMoney();
@@ -104,22 +103,18 @@ class AppData {
 		if (incomeAmountItems.length) { this.validRusNum() }
 	}
 
-	getExpenses() {
-		expensesItem.forEach(el => {
-			let itemExpenses = el.querySelector('.expenses-title').value,
-				cashExpenses = el.querySelector('.expenses-amount').value;
+	getExpInc() {
+		const count = el => {
+			const start = el.className.split('-')[0],
+				itemTitle = document.querySelector(`.${start}-title`),
+				itemAmount = document.querySelector(`.${start}-amount`);
 
-			if (itemExpenses !== '' && cashExpenses !== '') { this.expenses[itemExpenses] = cashExpenses }
-		});
-	}
+			expensesItem.forEach(count)
+			incomeAmountItems.forEach(count)
 
-	getIncome() {
-		incomeAmountItems.forEach(el => {
-			let itemsIncome = el.querySelector('input.income-title').value,
-				cashIncome = el.querySelector('.income-amount').value;
+			if (itemTitle !== '' && itemAmount !== '') { this[start][itemTitle] = itemAmount }
+		}
 
-			if (itemsIncome !== '' && cashIncome !== '') { this.income[itemsIncome] = cashIncome }
-		});
 	}
 
 	getAddExpenses() {
