@@ -1,10 +1,25 @@
 'use strict'
 
-const todoControl = document.querySelector('.todo-control'),
-	headerInput = document.querySelector('.header-input'),
-	todoList = document.querySelector('.todo-list'),
-	todoCompleted = document.querySelector('.todo-completed'),
-	btnSubmit = document.querySelector('.header-button');
+// const todoControl = document.querySelector('.todo-control'),
+// 	headerInput = document.querySelector('.header-input'),
+// 	todoList = document.querySelector('.todo-list'),
+// 	todoCompleted = document.querySelector('.todo-completed'),
+// 	btnSubmit = document.querySelector('.header-button');
+
+const userName = document.querySelector('.user__name'),
+	check = document.querySelector('.check'),
+	login = document.querySelector('.login'),
+	userList = document.querySelector('.user-list');
+
+
+
+
+
+
+
+
+
+
 
 let data = [];
 if (localStorage.getItem('ToDo')) { data = JSON.parse(localStorage.getItem('ToDo')) }
@@ -20,7 +35,6 @@ const render = () => {
 			<span class="text-todo">${el.value}</span>
 			<div class="todo-buttons">
 				<button class="todo-remove"></button>
-				<button class="todo-complete"></button>
 			</div>`;
 
 		(el.completed) ? todoCompleted.prepend(li) : todoList.prepend(li);
