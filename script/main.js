@@ -120,7 +120,7 @@ class AppData {
 
 			if (itemsIncome !== '' && cashIncome !== '') { this.income[itemsIncome] = cashIncome }
 		});
-		for (let key in this.income) {
+		for (const key in this.income) {
 			this.incomeMonth += +this.income[key];
 		}
 	}
@@ -168,6 +168,19 @@ class AppData {
 
 		btnReset.style.display = 'none';
 		btnResult.style.display = 'block';
+
+		this.budget = 0;
+		this.budgetDay = 0;
+		this.budgetMonth = 0;
+		this.expensesMonth = 0;
+		this.deposit = false;
+		this.percentDeposi = 0;
+		this.moneyDeposi = 0;
+		this.incomeMonth = 0;
+		this.income = {};
+		this.expenses = {};
+		this.addExpenses = [];
+		this.addIncome = [];
 	}
 
 	validRusNum() {
