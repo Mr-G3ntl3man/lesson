@@ -143,7 +143,7 @@ class AppData {
 	getExpensesMonth() {
 		let sum = 0;
 
-		for (let key in this.expenses) {
+		for (const key in this.expenses) {
 			sum += +this.expenses[key];
 		}
 		return this.expensesMonth = sum;
