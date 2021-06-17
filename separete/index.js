@@ -1,8 +1,12 @@
-const divD = document.createElement('div'),
-	divN = document.createElement('div')
+const div1 = document.createElement('div'),
+	div2 = document.createElement('div'),
+	div3 = document.createElement('div'),
+	div4 = document.createElement('div')
 
-document.body.appendChild(divD)
-document.body.appendChild(divN)
+document.body.appendChild(div1)
+document.body.appendChild(div2)
+document.body.appendChild(div3)
+document.body.appendChild(div4)
 
 document.body.style.cssText = `
 	display: flex;
@@ -28,7 +32,7 @@ const createZero = i => {
 	return i
 }
 
-// До нового года осталось ${newYear}
+
 const resultDate = () => {
 	const date = new Date(),
 		today = date.toLocaleDateString('ru', options),
@@ -48,14 +52,28 @@ const resultDate = () => {
 		}
 	}
 
-	const result = `
-		${timesOfDay()}
-		Сегодня ${today.slice(0, -17)}
-		Текущее время: ${hour}:${minute}:${second}
+	const newYear = () => {
+		const year = new Date('January 1, 2022'),
+			msDay = 24 * 60 * 60 * 1000,
+			daysLeft = Math.round((year.getTime() - date.getTime()) / msDay),
+			dd = parseInt(String(daysLeft).substr(daysLeft.length - 1))
 
-		`
+		if (daysLeft > 4 && daysLeft < 21) {
+			return `${daysLeft} дней`
+		} else if (dd === 1) {
+			return `${daysLeft} день`
+		} else if (dd === 2 || dd === 3 || dd === 4) {
+			return `${daysLeft} дня`
+		} else {
+			return `${daysLeft} дней`
+		}
+	}
 
-	divD.innerHTML = result
+
+	div1.innerHTML = `${timesOfDay()}`
+	div2.innerHTML = `Сегодня: ${(today.charAt(0).toUpperCase() + today.slice(1)).slice(0, -17)}`
+	div3.innerHTML = `Текущее время: ${hour}:${minute}:${second}`
+	div4.innerHTML = `До нового года осталось ${newYear()}`
 }
 
 setInterval(resultDate, 1000)
