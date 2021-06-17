@@ -4,6 +4,9 @@ window.addEventListener('DOMContentLoaded', () => {
 			timerMinutes = document.querySelector('#timer-minutes'),
 			timerSeconds = document.querySelector('#timer-seconds')
 
+		const createZero = i => { if (i < 10) { i = "0" + i } return i }
+
+
 		const getTimeRemaining = () => {
 			const dateStop = new Date(deadline).getTime(),
 				dateNow = new Date().getTime(),
@@ -16,9 +19,9 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 
 		const updateClock = () => {
-			timerHours.textContent = getTimeRemaining().hours
-			timerMinutes.textContent = getTimeRemaining().minutes
-			timerSeconds.textContent = getTimeRemaining().seconds
+			timerHours.textContent = createZero(getTimeRemaining().hours)
+			timerMinutes.textContent = createZero(getTimeRemaining().minutes)
+			timerSeconds.textContent = createZero(getTimeRemaining().seconds)
 		}
 
 		const timer = setInterval(() => {
@@ -35,7 +38,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		updateClock()
 	}
 
-	countTimer('17 june 2021')
+	countTimer('18 june 2021')
 })
 
 
