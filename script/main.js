@@ -37,3 +37,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	countTimer('17 june 2021')
 })
+
+
+
