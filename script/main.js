@@ -32,7 +32,9 @@ let expensesItem = document.querySelectorAll('.expenses-items'),
 	allInputRus = document.querySelectorAll('.data input[placeholder=Наименование]');
 
 
-const isNumber = n => !isNaN(parseFloat(n)) && isFinite(n);
+const isNumber = n => {
+	return !isNaN(parseFloat(n)) && isFinite(n)
+}
 
 
 class AppData {
@@ -167,7 +169,6 @@ class AppData {
 		this.budgetDay = 0;
 		this.budgetMonth = 0;
 		this.expensesMonth = 0;
-		this.deposit = false;
 		this.percentDeposit = 0;
 		this.moneyDeposit = 0;
 		this.incomeMonth = 0;
@@ -205,6 +206,7 @@ class AppData {
 		} else {
 			depositBank.style.display = 'none'
 			depositAmount.style.display = 'none'
+			depositPercent.style.display = 'none';
 			depositBank.value = ''
 			depositAmount.value = ''
 
@@ -216,22 +218,19 @@ class AppData {
 	changePercent() {
 		if (this.value === 'other') {
 			depositPercent.style.display = 'inline-block';
-			this.value = '';
-			btnResult.addEventListener('click', () => {
-				console.log(this);
-				console.log(this.value);
-				if (!isNumber(depositPercent.value) && depositPercent.value <= 0 && depositPercent.value >= 100) {
-					depositPercent.value = this.value;
-				} else {
-					alert('Введите корректное значение в поле проценты')
+			depositPercent.value = '';
+			depositPercent.addEventListener('input', () => {
+				if (depositPercent.value < 0 || depositPercent.value > 100 || !isNumber(depositPercent.value)) {
+					depositPercent.value = '';
 					btnResult.setAttribute("disabled", "disabled")
-					btnReset.style.display = 'none';
-					btnResult.style.cssText = `
-					display:block;
-					opacity: 0.5;	`;
+					btnResult.style.opacity = '0.5';
+				} else {
+					btnResult.removeAttribute('disabled')
+					btnResult.style.opacity = '1';
 				}
 			})
 		} else {
+			depositPercent.style.display = 'none';
 			depositPercent.value = this.value;
 		}
 	}
