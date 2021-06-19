@@ -37,8 +37,93 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		updateClock()
 	}
-
 	countTimer('20 june 2021')
+
+
+	const toggleMenu = () => {
+		const menuBtn = document.querySelector('.menu'),
+			closeBtn = document.querySelector('.close-btn'),
+			menuItem = document.querySelectorAll('ul>li'),
+			main = document.querySelector('main'),
+			menu = document.querySelector('menu')
+
+
+		let count = -10
+
+		const anim = () => {
+			count++
+			const aminId = requestAnimationFrame(anim),
+				menuRect = menu.getBoundingClientRect(),
+				mainRect = main.getBoundingClientRect();
+
+			(mainRect.right < 768) ? cancelAnimationFrame(aminId) :
+				(menuRect.right < mainRect.right) ? menu.style.transform = `translateX(${count * 10}%)` : cancelAnimationFrame(aminId)
+		}
+
+		const animClose = () => {
+			count--
+			const aminId = requestAnimationFrame(animClose),
+				menuRect = menu.getBoundingClientRect();
+			(menuRect.left > -menuRect.width) ? menu.style.transform = `translateX(${count * 10}%)` : cancelAnimationFrame(aminId)
+		}
+
+		menuBtn.addEventListener('click', anim)
+		closeBtn.addEventListener('click', animClose)
+		menuItem.forEach(el => el.addEventListener('click', () => menu.classList.toggle('active-menu')))
+	}
+	toggleMenu()
+
+
+	const toggleModal = () => {
+		const popup = document.querySelector('.popup'),
+			popupBtn = document.querySelectorAll('.popup-btn'),
+			popupClose = document.querySelector('.popup-close'),
+			popupItem = document.querySelector('.popup-content')
+
+		let count = 0,
+			countTwo = -20
+
+		const anim = () => {
+			count += 0.1
+			const animId = requestAnimationFrame(anim);
+			(count <= 1) ? popup.style.opacity = count : cancelAnimationFrame(animId)
+		}
+
+		const animClose = () => {
+			count -= 0.1
+			const animId = requestAnimationFrame(animClose);
+			(count >= 0) ? popup.style.opacity = count : cancelAnimationFrame(animId)
+		}
+
+		const animModal = () => {
+			countTwo++
+			const animId = requestAnimationFrame(animModal);
+			(0 >= countTwo) ? popupItem.style.transform = `translate(-50px,${countTwo * 5}%)` : cancelAnimationFrame(animId)
+		}
+
+		animModalClose = () => {
+			countTwo--
+			const animId = requestAnimationFrame(animModalClose);
+			(-30 <= countTwo) ? popupItem.style.transform = `translate(-50px,${countTwo * 5}%)` : cancelAnimationFrame(animId)
+		}
+
+		popupBtn.forEach(el => el.addEventListener('click', () => {
+			popup.style.display = 'block'
+			popup.style.opacity = '0'
+			popupItem.style.transform = 'translate(-50px,-150%)'
+			anim()
+			setTimeout(() => animModal(), 200);
+
+		}))
+		popupClose.addEventListener('click', () => {
+			animModalClose()
+			setTimeout(() => animClose(), 400);
+			setTimeout(() => popup.style.display = 'none', 500);
+		})
+	}
+	toggleModal()
+
+
 })
 
 
