@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		updateClock()
 	}
-	countTimer('20 june 2021')
+	countTimer('22 june 2021')
 
 
 	const toggleMenu = () => {
@@ -114,12 +114,19 @@ window.addEventListener('DOMContentLoaded', () => {
 				popupItem.style.transform = 'translate(-50px,-150%)'
 				anim()
 				setTimeout(() => animModal(), 200);
+			} else {
+				popup.style.display = 'block'
 			}
 		}))
 		popupClose.addEventListener('click', () => {
-			animModalClose()
-			setTimeout(() => animClose(), 400);
-			setTimeout(() => popup.style.display = 'none', 500);
+			if (window.innerWidth > 768) {
+				animModalClose()
+				setTimeout(() => animClose(), 400);
+				setTimeout(() => popup.style.display = 'none', 500);
+			} else {
+				popup.style.display = 'none'
+			}
+
 		})
 	}
 	toggleModal()
