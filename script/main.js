@@ -24,3 +24,5 @@ const debounceWrite = debounce(write, 300)
 
 
 input.addEventListener('input', debounceWrite)
+
+
