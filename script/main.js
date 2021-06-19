@@ -108,12 +108,13 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 
 		popupBtn.forEach(el => el.addEventListener('click', () => {
-			popup.style.display = 'block'
-			popup.style.opacity = '0'
-			popupItem.style.transform = 'translate(-50px,-150%)'
-			anim()
-			setTimeout(() => animModal(), 200);
-
+			if (window.innerWidth > 768) {
+				popup.style.display = 'block'
+				popup.style.opacity = '0'
+				popupItem.style.transform = 'translate(-50px,-150%)'
+				anim()
+				setTimeout(() => animModal(), 200);
+			}
 		}))
 		popupClose.addEventListener('click', () => {
 			animModalClose()
