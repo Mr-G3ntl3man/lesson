@@ -108,12 +108,13 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 
 		popupBtn.forEach(el => el.addEventListener('click', () => {
-			popup.style.display = 'block'
-			popup.style.opacity = '0'
-			popupItem.style.transform = 'translate(-50px,-150%)'
-			anim()
-			setTimeout(() => animModal(), 200);
-
+			if (window.innerWidth > 768) {
+				popup.style.display = 'block'
+				popup.style.opacity = '0'
+				popupItem.style.transform = 'translate(-50px,-150%)'
+				anim()
+				setTimeout(() => animModal(), 200);
+			}
 		}))
 		popupClose.addEventListener('click', () => {
 			animModalClose()
@@ -123,6 +124,28 @@ window.addEventListener('DOMContentLoaded', () => {
 	}
 	toggleModal()
 
+
+
+	const scrollTo = () => {
+		const arrow = document.querySelector('a'),
+			main = document.querySelector('main')
+
+		let count = 0
+
+		const scrollPx = () => window.scrollY
+
+		const scroll = () => {
+			count += 0.4
+			const animId = requestAnimationFrame(scroll);
+			(Math.round(scrollPx()) <= Math.round(main.offsetHeight)) ? window.scrollBy(0, count) : cancelAnimationFrame(animId)
+		}
+
+		arrow.addEventListener('click', el => {
+			el.preventDefault()
+			scroll()
+		})
+	}
+	scrollTo()
 
 })
 
