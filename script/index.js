@@ -1,4 +1,4 @@
-'use strict'
+// 'use strict'
 
 // const todoControl = document.querySelector('.todo-control'),
 // 	headerInput = document.querySelector('.header-input'),
@@ -77,14 +77,12 @@
 
 
 class ToDo {
-	constructor(form, input, todoList, todoCom, container, btnCom, btnDel) {
+	constructor(form, input, todoList, todoCom, container) {
 		this.form = document.querySelector(form)
 		this.input = document.querySelector(input)
 		this.todoList = document.querySelector(todoList)
 		this.todoCom = document.querySelector(todoCom)
 		this.container = document.querySelector(container)
-		this.btnCom = document.querySelector(btnCom)
-		this.btnDel = document.querySelector(btnDel)
 		this.todoData = new Map(JSON.parse(localStorage.getItem('list')))
 	}
 
@@ -112,35 +110,48 @@ class ToDo {
 		(item.completed) ? this.todoCom.append(li) : this.todoList.append(li)
 	}
 
-
 	addTodo(e) {
 		e.preventDefault()
-
-		if (this.input.value.trim()) {
+		if (this.input.value.trim() === '') {
+			this.input.classList.add('valid')
+			setTimeout(() => { this.input.classList.remove('valid') }, 500)
+		} else {
 			const newTodo = { value: this.input.value, completed: false, key: this.generateKey(), }
 			this.todoData.set(newTodo.key, newTodo)
+			this.input.value = ''
 			this.render()
 		}
 	}
 
 	handler() {
-		this.container.addEventListener('click', el => this.deleteItem(el.target))
+		this.container.addEventListener('click', el => {
+			this.deleteItem(el.target)
+			this.completedItem(el.target)
+		})
 	}
 
 	deleteItem(el) {
 		if (el.className === 'todo-remove') {
-			const li = el.parentNode.parentNode
+			const li = el.parentNode.parentNode,
+				span = li.querySelector('span')
+
 			li.classList.add('hidden')
 			setTimeout(() => { li.remove() }, 1000)
 
-
-
+			this.todoData.forEach((el, index, arr) => { if (span.textContent === el.value) arr.delete(index) })
+			localStorage.setItem('list', JSON.stringify([...this.todoData]))
 		}
-
 	}
 
-	completedItem() {
+	completedItem(el) {
+		if (el.className === 'todo-complete') {
+			const li = el.parentNode.parentNode,
+				span = li.querySelector('span')
 
+			this.todoData.forEach(el => { if (span.textContent === el.value) el.completed = !el.completed })
+			localStorage.setItem('list', JSON.stringify([...this.todoData]))
+			this.render()
+		}
 	}
 
 	generateKey() {
@@ -161,9 +172,6 @@ const newList = new ToDo(
 	'.header-input',
 	'.todo-list',
 	'.todo-completed',
-	'.todo-container',
-	'.todo-complete',
-	'.todo-remove')
+	'.todo-container')
 
 newList.init()
-// newList.handler()
