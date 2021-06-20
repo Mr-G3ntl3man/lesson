@@ -64,3 +64,5 @@ check.addEventListener('click', collector)
 userList.addEventListener('click', el => removePrerson(el.target))
 login.addEventListener('click', logPerson)
 
+
+
