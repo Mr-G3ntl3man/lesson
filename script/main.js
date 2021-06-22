@@ -228,13 +228,11 @@ window.addEventListener('DOMContentLoaded', () => {
 			nextSlide(dots, currentSlide, 'dot-active')
 		}
 
-		const startSlide = (time = 3000) => {
-			interval = setInterval(autoPlay, time)
-		}
+		const startSlide = (time = 3000) => interval = setInterval(autoPlay, time)
 
-		const stoptSlide = () => {
-			clearInterval(interval)
-		}
+
+		const stoptSlide = () => clearInterval(interval)
+
 
 		slider.addEventListener('click', el => {
 			el.preventDefault()
@@ -266,6 +264,9 @@ window.addEventListener('DOMContentLoaded', () => {
 	}
 	slider()
 })
+
+
+
 
 
 
