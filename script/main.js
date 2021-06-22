@@ -41,10 +41,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 	const toggleMenu = () => {
-		const menuBtn = document.querySelector('.menu'),
-			closeBtn = document.querySelector('.close-btn'),
-			menuItem = document.querySelectorAll('ul>li'),
-			main = document.querySelector('main'),
+		const main = document.querySelector('main'),
 			menu = document.querySelector('menu')
 
 
@@ -54,24 +51,37 @@ window.addEventListener('DOMContentLoaded', () => {
 			count++
 			const aminId = requestAnimationFrame(anim),
 				menuRect = menu.getBoundingClientRect(),
-				mainRect = main.getBoundingClientRect();
+				mainRect = main.getBoundingClientRect()
 
-			(mainRect.right < 768) ? cancelAnimationFrame(aminId) :
-				(menuRect.right < mainRect.right) ? menu.style.transform = `translateX(${count * 10}%)` :
-					cancelAnimationFrame(aminId)
+			if (mainRect.right < 768) cancelAnimationFrame(aminId)
+			else if (menuRect.right < mainRect.right) {
+				menu.style.transform = `translateX(${count * 10}%)`
+				menu.classList.add('active')
+			} else {
+				cancelAnimationFrame(aminId)
+			}
+
 		}
 
 		const animClose = () => {
 			count--
 			const aminId = requestAnimationFrame(animClose),
-				menuRect = menu.getBoundingClientRect();
-			(menuRect.left > -menuRect.width) ? menu.style.transform = `translateX(${count * 10}%)` :
+				menuRect = menu.getBoundingClientRect()
+			if (menuRect.left > -menuRect.width) {
+				menu.style.transform = `translateX(${count * 10}%)`
+				menu.classList.remove('active')
+			} else {
 				cancelAnimationFrame(aminId)
+			}
 		}
 
-		menuBtn.addEventListener('click', anim)
-		closeBtn.addEventListener('click', animClose)
-		menuItem.forEach(el => el.addEventListener('click', () => menu.classList.toggle('active-menu')))
+		document.body.addEventListener('click', el => {
+			if (el.target.closest('.menu')) anim()
+			if (!el.target.closest('menu') && !el.target.closest('.menu')) animClose()
+			if (el.target.classList.contains('close-btn')) animClose()
+			if (el.target.closest('menu ul>li>a')) animClose()
+		})
+
 	}
 	toggleMenu()
 
@@ -111,31 +121,38 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 
 		popupBtn.forEach(el => el.addEventListener('click', () => {
-			if (window.innerWidth < 768) popup.style.display = 'block'
-
 			popup.style.display = 'block'
-			popup.style.opacity = '0'
-			popupItem.style.transform = 'translate(-50px,-150%)'
-			anim()
-			setTimeout(() => animModal(), 200)
+
+			if (window.innerWidth > 768) {
+				popup.style.opacity = '0'
+				popupItem.style.transform = 'translate(-50px,-150%)'
+				anim()
+				setTimeout(() => animModal(), 200)
+			}
 		}))
 
 		popup.addEventListener('click', ev => {
 			const target = ev.target.closest('.popup-content')
 
 			if (ev.target.classList.contains('popup-close')) {
-				if (window.innerWidth < 768) popup.style.display = 'none'
-
-				animModalClose()
-				setTimeout(() => animClose(), 400)
-				setTimeout(() => popup.style.display = 'none', 500)
+				if (window.innerWidth < 768) {
+					popup.style.display = 'none'
+				} else {
+					animModalClose()
+					setTimeout(() => animClose(), 400)
+					setTimeout(() => popup.style.display = 'none', 500)
+				}
 			}
 
-			if (!target) {
 
-				animModalClose()
-				setTimeout(() => animClose(), 400)
-				setTimeout(() => popup.style.display = 'none', 500)
+			if (!target) {
+				if (window.innerWidth < 768) {
+					popup.style.display = 'none'
+				} else {
+					animModalClose()
+					setTimeout(() => animClose(), 400)
+					setTimeout(() => popup.style.display = 'none', 500)
+				}
 			}
 		})
 	}
