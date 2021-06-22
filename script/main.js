@@ -4,7 +4,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			timerMinutes = document.querySelector('#timer-minutes'),
 			timerSeconds = document.querySelector('#timer-seconds')
 
-		const createZero = i => i < 10 ? `0${i}` : i
+		const createZero = i => (i < 10 ? `0${i}` : i)
 
 
 		const getTimeRemaining = () => {
@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		updateClock()
 	}
-	countTimer('20 june 2021')
+	countTimer('25 june 2021')
 
 
 	const toggleMenu = () => {
@@ -57,14 +57,16 @@ window.addEventListener('DOMContentLoaded', () => {
 				mainRect = main.getBoundingClientRect();
 
 			(mainRect.right < 768) ? cancelAnimationFrame(aminId) :
-				(menuRect.right < mainRect.right) ? menu.style.transform = `translateX(${count * 10}%)` : cancelAnimationFrame(aminId)
+				(menuRect.right < mainRect.right) ? menu.style.transform = `translateX(${count * 10}%)` :
+					cancelAnimationFrame(aminId)
 		}
 
 		const animClose = () => {
 			count--
 			const aminId = requestAnimationFrame(animClose),
 				menuRect = menu.getBoundingClientRect();
-			(menuRect.left > -menuRect.width) ? menu.style.transform = `translateX(${count * 10}%)` : cancelAnimationFrame(aminId)
+			(menuRect.left > -menuRect.width) ? menu.style.transform = `translateX(${count * 10}%)` :
+				cancelAnimationFrame(aminId)
 		}
 
 		menuBtn.addEventListener('click', anim)
@@ -77,7 +79,6 @@ window.addEventListener('DOMContentLoaded', () => {
 	const toggleModal = () => {
 		const popup = document.querySelector('.popup'),
 			popupBtn = document.querySelectorAll('.popup-btn'),
-			popupClose = document.querySelector('.popup-close'),
 			popupItem = document.querySelector('.popup-content')
 
 		let count = 0,
@@ -98,35 +99,44 @@ window.addEventListener('DOMContentLoaded', () => {
 		const animModal = () => {
 			countTwo++
 			const animId = requestAnimationFrame(animModal);
-			(0 >= countTwo) ? popupItem.style.transform = `translate(-50px,${countTwo * 5}%)` : cancelAnimationFrame(animId)
+			(0 >= countTwo) ? popupItem.style.transform = `translate(-50px,${countTwo * 5}%)` :
+				cancelAnimationFrame(animId)
 		}
 
-		animModalClose = () => {
+		const animModalClose = () => {
 			countTwo--
 			const animId = requestAnimationFrame(animModalClose);
-			(-30 <= countTwo) ? popupItem.style.transform = `translate(-50px,${countTwo * 5}%)` : cancelAnimationFrame(animId)
+			(-30 <= countTwo) ? popupItem.style.transform = `translate(-50px,${countTwo * 5}%)` :
+				cancelAnimationFrame(animId)
 		}
 
 		popupBtn.forEach(el => el.addEventListener('click', () => {
-			if (window.innerWidth > 768) {
-				popup.style.display = 'block'
-				popup.style.opacity = '0'
-				popupItem.style.transform = 'translate(-50px,-150%)'
-				anim()
-				setTimeout(() => animModal(), 200);
-			} else {
-				popup.style.display = 'block'
-			}
+			if (window.innerWidth < 768) popup.style.display = 'block'
+
+			popup.style.display = 'block'
+			popup.style.opacity = '0'
+			popupItem.style.transform = 'translate(-50px,-150%)'
+			anim()
+			setTimeout(() => animModal(), 200)
 		}))
-		popupClose.addEventListener('click', () => {
-			if (window.innerWidth > 768) {
+
+		popup.addEventListener('click', ev => {
+			const target = ev.target.closest('.popup-content')
+
+			if (ev.target.classList.contains('popup-close')) {
+				if (window.innerWidth < 768) popup.style.display = 'none'
+
 				animModalClose()
-				setTimeout(() => animClose(), 400);
-				setTimeout(() => popup.style.display = 'none', 500);
-			} else {
-				popup.style.display = 'none'
+				setTimeout(() => animClose(), 400)
+				setTimeout(() => popup.style.display = 'none', 500)
 			}
 
+			if (!target) {
+
+				animModalClose()
+				setTimeout(() => animClose(), 400)
+				setTimeout(() => popup.style.display = 'none', 500)
+			}
 		})
 	}
 	toggleModal()
@@ -138,13 +148,39 @@ window.addEventListener('DOMContentLoaded', () => {
 		const name = elem.href.split('#')[1],
 			item = document.querySelector(`#${name}`)
 
-		item.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		item.scrollIntoView({ behavior: 'smooth', block: 'start' })
 	}
 
 	arrow.addEventListener('click', el => {
 		el.preventDefault()
 		scroll(arrow)
 	})
+
+
+	const tabs = () => {
+		const headerTab = document.querySelector('.service-header'),
+			tab = headerTab.querySelectorAll('.service-header-tab'),
+			tabContent = document.querySelectorAll('.service-tab')
+
+		const toggleContent = index => {
+			tabContent.forEach((el, i) => {
+				if (index === i) {
+					tab[i].classList.add('active')
+					tabContent[i].classList.remove('d-none')
+				} else {
+					tab[i].classList.remove('active')
+					tabContent[i].classList.add('d-none')
+				}
+			})
+		}
+
+		headerTab.addEventListener('click', el => {
+			const target = el.target.closest('.service-header-tab')
+			if (target) { tab.forEach((el, index) => { if (el === target) toggleContent(index) }) }
+		})
+
+	}
+	tabs()
 
 })
 
