@@ -49,20 +49,24 @@ const removePrerson = (el) => {
 }
 
 const logPerson = () => {
-	const login = prompt('Ведите логин!')
-	data.forEach(el => {
-		if (login === el.login) {
-			const password = prompt('Ведите пароль!');
-			(password === el.password) ? userName.innerHTML = el.name : alert('Не верный пароль!')
-		} else {
-			alert('Пользователь не найден!')
-		}
-	})
+	const login = prompt('Ведите логин!');
+
+	let log = 0;
+
+	data.forEach(el => { if (login === el.login) log = el })
+
+	if (login === log.login) {
+		const password = prompt('Ведите пароль!');
+		(password === log.password) ? userName.innerHTML = log.name : alert('Не верный пароль!')
+	} else { alert('Пользователь не найден!') }
+
 }
 
 check.addEventListener('click', collector)
 userList.addEventListener('click', el => removePrerson(el.target))
 login.addEventListener('click', logPerson)
+
+
 
 
 
