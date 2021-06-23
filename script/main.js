@@ -244,7 +244,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			if (el.target.matches('#arrow-right')) currentSlide++
 			if (el.target.matches('#arrow-left')) currentSlide--
 			if (el.target.matches('.dot')) {
-				dots.forEach((el, index) => { if (el === el.target) currentSlide = index })
+				dots.forEach((elem, index) => { if (elem === el.target) currentSlide = index })
 			}
 
 			if (currentSlide >= slide.length) currentSlide = 0
