@@ -202,7 +202,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	const slider = () => {
 		const slide = document.querySelectorAll('.portfolio-item'),
-			btn = document.querySelectorAll('.portfolio-btn'),
+			// btn = document.querySelectorAll('.portfolio-btn'),
 			slider = document.querySelector('.portfolio-content'),
 			portfolioDots = document.querySelector('.portfolio-dots')
 
@@ -263,8 +263,44 @@ window.addEventListener('DOMContentLoaded', () => {
 		startSlide()
 	}
 	slider()
-})
 
+
+	const dataImg = () => {
+		const img = document.querySelectorAll('.command .container .row img')
+
+		img.forEach(el => {
+			el.dataset.prevImg = el.src
+
+			el.addEventListener('mouseenter', el => { el.target.src = el.target.dataset.img })
+			el.addEventListener('mouseleave', el => { el.target.src = el.target.dataset.prevImg })
+		})
+	}
+	dataImg()
+
+
+	const inputValidation = () => {
+		const calcBlock = document.querySelectorAll('.calc-block input'),
+			userName = document.querySelectorAll('[name="user_name"]'),
+			userMessage = document.querySelector('[name="user_message"]'),
+			email = document.querySelectorAll('[name="user_email"]'),
+			userPhone = document.querySelectorAll('[name="user_phone"]')
+
+
+
+		userName.forEach(el => { el.addEventListener('input', () => el.value = el.value.replace(/[^а-яё -]/gi, '')) })
+		userPhone.forEach(el => { el.addEventListener('input', () => el.value = el.value.replace(/[^\d-()]/g, '')) })
+		calcBlock.forEach(el => { el.addEventListener('input', () => el.value = el.value.replace(/[^\d]/g, '')) })
+		email.forEach(el => {
+			el.addEventListener('input', () => el.value = el.value.replace(/[^@!_~'-.*][^a-z]/gi, ''))
+		})
+		userMessage.addEventListener('input', () => {
+			userMessage.value = userMessage.value.replace(/[^а-яё -]/gi, '')
+		})
+
+
+	}
+	inputValidation()
+})
 
 
 
