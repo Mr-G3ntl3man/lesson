@@ -51,7 +51,7 @@ const removePrerson = (el) => {
 const logPerson = () => {
 	const login = prompt('Ведите логин!');
 
-	let log = 0;
+	let log = {};
 
 	data.forEach(el => { if (login === el.login) log = el })
 
