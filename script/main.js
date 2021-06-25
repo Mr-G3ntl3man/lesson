@@ -285,16 +285,43 @@ window.addEventListener('DOMContentLoaded', () => {
 			email = document.querySelectorAll('[name="user_email"]'),
 			userPhone = document.querySelectorAll('[name="user_phone"]')
 
+		userName.forEach(el => {
+			el.addEventListener('blur', () => {
+				let res = ''
+				el.value.split(' ').forEach(elem => res += elem.charAt(0).toUpperCase() + elem.slice(1) + ' ')
+				el.value = res
+				el.value = el.value.replace(/[^а-яё ]/gi, '')
+				el.value = el.value.replace(/^\s+|\s+$/g, '')
+				el.value = el.value.replace(/\s+/g, ' ')
 
-
-		userName.forEach(el => { el.addEventListener('input', () => el.value = el.value.replace(/[^а-яё -]/gi, '')) })
-		userPhone.forEach(el => { el.addEventListener('input', () => el.value = el.value.replace(/[^\d-()]/g, '')) })
-		calcBlock.forEach(el => { el.addEventListener('input', () => el.value = el.value.replace(/[^\d]/g, '')) })
-		email.forEach(el => {
-			el.addEventListener('input', () => el.value = el.value.replace(/[^@!_~'-.*][^a-z]/gi, ''))
+			})
 		})
-		userMessage.addEventListener('input', () => {
+
+		userPhone.forEach(el => {
+			el.addEventListener('blur', () => {
+				el.value = el.value.replace(/[^\d-()]/g, '')
+				el.value = el.value.replace(/-+/g, '-')
+			})
+		})
+
+		calcBlock.forEach(el => {
+			el.addEventListener('blur', () => {
+				el.value = el.value.replace(/[^\d]/g, '')
+			})
+		})
+
+		email.forEach(el => {
+			el.addEventListener('blur', () => {
+				el.value = el.value.replace(/[^@!_~'-.*][^a-z]/gi, '')
+				el.value = el.value.replace(/-+/g, '-')
+			})
+		})
+
+		userMessage.addEventListener('blur', () => {
 			userMessage.value = userMessage.value.replace(/[^а-яё -]/gi, '')
+			userMessage.value = userMessage.value.replace(/-+/g, '-')
+			userMessage.value = userMessage.value.replace(/^\s+|\s+$/g, '')
+			userMessage.value = userMessage.value.replace(/\s+/g, ' ')
 		})
 
 
