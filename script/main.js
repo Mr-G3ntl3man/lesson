@@ -312,7 +312,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		email.forEach(el => {
 			el.addEventListener('blur', () => {
-				el.value = el.value.replace(/[^@!_~'-.*][^a-z]/gi, '')
+				el.value = el.value.replace(/[^a-z@!_~'-.*]/gi, '')
 				el.value = el.value.replace(/-+/g, '-')
 			})
 		})
