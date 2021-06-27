@@ -28,6 +28,7 @@ class ToDo {
 		li.insertAdjacentHTML('beforeend', `
 				<span class="text-todo">${item.value}</span>
 				<div class="todo-buttons">
+					<button class="todo-edit"></button>
 					<button class="todo-remove"></button>
 					<button class="todo-complete"></button>
 				</div>`);
@@ -52,6 +53,7 @@ class ToDo {
 		this.container.addEventListener('click', el => {
 			this.deleteItem(el.target)
 			this.completedItem(el.target)
+			this.editItem(el.target)
 		})
 	}
 
@@ -76,6 +78,24 @@ class ToDo {
 			this.todoData.forEach(el => { if (span.textContent === el.value) el.completed = !el.completed })
 			localStorage.setItem('list', JSON.stringify([...this.todoData]))
 			this.render()
+		}
+	}
+
+	editItem(el) {
+		if (el.className === 'todo-edit') {
+			const li = el.parentNode.parentNode,
+				span = li.querySelector('span')
+			li.setAttribute('contenteditable', 'true')
+
+			this.todoData.forEach(el => { if (span.textContent === el.value) span.dataset.key = el.key })
+
+			li.addEventListener('blur', () => {
+				li.removeAttribute('contenteditable')
+				this.todoData.forEach(el => { if (span.dataset.key === el.key) el.value = span.textContent })
+				localStorage.setItem('list', JSON.stringify([...this.todoData]))
+			})
+
+
 		}
 	}
 

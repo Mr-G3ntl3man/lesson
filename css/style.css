@@ -152,7 +152,7 @@ body {
 }
 
 .todo-buttons {
-	width: 100px;
+	width: 150px;
 	height: 50px;
 
 	position: absolute;
@@ -196,6 +196,15 @@ body {
 
 .todo-remove {
 	background-image: url("../img/delete.svg");
+	transition: transform 0.2s ease-in;
+}
+.todo-edit {
+	background-image: url("../img/edit.svg");
+	transition: transform 0.2s ease-in;
+}
+
+.todo-edit:hover {
+	transform: scale(1.2);
 	transition: transform 0.2s ease-in;
 }
 
