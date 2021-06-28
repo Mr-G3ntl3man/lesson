@@ -395,7 +395,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		const collector = el => {
 			el.preventDefault()
-			message.textContent = 'Загрузка....'
+			message.insertAdjacentHTML('afterbegin', `<img src="images/preloader.gif" >`)
 			const formData = new FormData(form)
 			formData.forEach((el, key) => body[key] = el)
 
