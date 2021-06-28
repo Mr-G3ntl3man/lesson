@@ -298,8 +298,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		userPhone.forEach(el => {
 			el.addEventListener('blur', () => {
-				el.value = el.value.replace(/[^\d-()]/g, '')
-				el.value = el.value.replace(/-+/g, '-')
+				el.value = el.value.replace(/[^\d+]/g, '')
 			})
 		})
 
@@ -311,24 +310,18 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		email.forEach(el => {
 			el.addEventListener('blur', () => {
-				el.value = el.value.replace(/[^@!_~'-.*][^a-z]/gi, '')
+				el.value = el.value.replace(/^[^a-z@!_~'-.*]/gi, '')
 				el.value = el.value.replace(/-+/g, '-')
 			})
 		})
 
 		userMessage.addEventListener('blur', () => {
-			userMessage.value = userMessage.value.replace(/[^а-яё -]/gi, '')
-			userMessage.value = userMessage.value.replace(/-+/g, '-')
-			userMessage.value = userMessage.value.replace(/^\s+|\s+$/g, '')
-			userMessage.value = userMessage.value.replace(/\s+/g, ' ')
+			userMessage.value = userMessage.value.replace(/[^а-яё0-9 ,.!?]/gi, '')
 		})
 
 
 	}
 	inputValidation()
-
-
-
 
 
 	const calc = (price = 100) => {
@@ -353,6 +346,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			if (calcDay.value && calcDay.value < 5) {
 				dayValue *= 2
 			} else if (calcDay.value && calcDay.value < 10) {
+				// eslint-disable-next-line no-unused-vars
 				dayValue *= 1.5
 			}
 
@@ -362,6 +356,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
 			const animCount = () => {
 				counter += 50
+				if (res > 10000) counter += 300 * 10
+				if (res > 100000) counter += 100000 * 10
+				if (res > 1000000) counter += 1000000 * 20
 				const animId = requestAnimationFrame(animCount);
 				(counter <= res) ? total.textContent = counter : cancelAnimationFrame(animId)
 			}
@@ -369,11 +366,64 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 
 
-		calcBlock.addEventListener('change', el => {
+		calcBlock.addEventListener('input', el => {
 			if (el.target.matches('select') || el.target.matches('input')) countSum()
 		})
 	}
 	calc()
+
+
+	const sendForm = () => {
+		const form = document.getElementById('form1'),
+			form2 = document.getElementById('form2'),
+			form3 = document.getElementById('form3'),
+			message = document.createElement('div'),
+			body = {}
+
+		const postData = (body, output, error) => {
+			const request = new XMLHttpRequest()
+
+			request.addEventListener('readystatechange', () => {
+				if (request.readyState !== 4) return;
+				(request.status === 200) ? output() : error(request.status)
+			})
+
+			request.open('POST', './server.php')
+			request.setRequestHeader('Content-Type', 'application/json')
+			request.send(JSON.stringify(body))
+		}
+
+		const collector = el => {
+			el.preventDefault()
+			message.textContent = 'Загрузка....'
+			const formData = new FormData(form)
+			formData.forEach((el, key) => body[key] = el)
+
+			postData(body, () => message.textContent = 'Запрос отправлен',
+				() => message.textContent = 'Ошибка')
+
+			if (el.target.closest('#form1')) {
+				form.appendChild(message)
+				form.querySelectorAll('input').forEach(el => el.value = '')
+			}
+			if (el.target.closest('#form2')) {
+				form2.appendChild(message)
+				form2.querySelectorAll('input').forEach(el => el.value = '')
+			}
+			if (el.target.closest('#form3')) {
+				form3.appendChild(message)
+				message.style.color = '#fff'
+				form3.querySelectorAll('input').forEach(el => el.value = '')
+			}
+		}
+
+		form.addEventListener('submit', el => collector(el))
+		form2.addEventListener('submit', el => collector(el))
+		form3.addEventListener('submit', el => collector(el))
+	}
+	sendForm()
+
+
 })
 
 
