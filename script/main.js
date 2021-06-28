@@ -422,8 +422,6 @@ window.addEventListener('DOMContentLoaded', () => {
 		form3.addEventListener('submit', el => collector(el))
 	}
 	sendForm()
-
-
 })
 
 
