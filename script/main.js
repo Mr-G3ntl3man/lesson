@@ -380,26 +380,28 @@ window.addEventListener('DOMContentLoaded', () => {
 			message = document.createElement('div'),
 			body = {}
 
-		const postData = (body, output, error) => {
+		const postData = body => new Promise((res, rej) => {
 			const request = new XMLHttpRequest()
 
 			request.addEventListener('readystatechange', () => {
 				if (request.readyState !== 4) return;
-				(request.status === 200) ? output() : error(request.status)
+				(request.status === 200) ? res() : rej(request.status)
 			})
 
 			request.open('POST', './server.php')
 			request.setRequestHeader('Content-Type', 'application/json')
 			request.send(JSON.stringify(body))
-		}
+		})
 
 		const collector = el => {
 			el.preventDefault()
 			message.insertAdjacentHTML('afterbegin', `<img src="images/preloader.gif" >`)
 			const formData = new FormData(form)
 			formData.forEach((el, key) => body[key] = el)
-			postData(body, () => message.textContent = 'Запрос отправлен',
-				() => message.textContent = 'Ошибка')
+
+			postData(body)
+				.then(() => message.textContent = 'Запрос отправлен')
+				.catch(() => message.textContent = 'Ошибка')
 
 			message.style.color = '#fff'
 			el.target.appendChild(message)
