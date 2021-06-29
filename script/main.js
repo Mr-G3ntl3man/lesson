@@ -356,11 +356,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
 			const animCount = () => {
 				counter += 50
-				if (res > 10000) counter += 300 * 10
-				if (res > 100000) counter += 100000 * 10
-				if (res > 1000000) counter += 1000000 * 20
+				const kef = co
+
 				const animId = requestAnimationFrame(animCount);
-				(counter <= res) ? total.textContent = counter : cancelAnimationFrame(animId)
+				(counter <= res) ? total.textContent = Math.ceil(counter) : cancelAnimationFrame(animId)
 			}
 			animCount()
 		}
