@@ -398,23 +398,12 @@ window.addEventListener('DOMContentLoaded', () => {
 			message.insertAdjacentHTML('afterbegin', `<img src="images/preloader.gif" >`)
 			const formData = new FormData(form)
 			formData.forEach((el, key) => body[key] = el)
-
 			postData(body, () => message.textContent = 'Запрос отправлен',
 				() => message.textContent = 'Ошибка')
 
-			if (el.target.closest('#form1')) {
-				form.appendChild(message)
-				form.querySelectorAll('input').forEach(el => el.value = '')
-			}
-			if (el.target.closest('#form2')) {
-				form2.appendChild(message)
-				form2.querySelectorAll('input').forEach(el => el.value = '')
-			}
-			if (el.target.closest('#form3')) {
-				form3.appendChild(message)
-				message.style.color = '#fff'
-				form3.querySelectorAll('input').forEach(el => el.value = '')
-			}
+
+			el.target.appendChild(message)
+			el.target.querySelectorAll('input').forEach(el => el.value = '')
 		}
 
 		form.addEventListener('submit', el => collector(el))
