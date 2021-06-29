@@ -398,7 +398,6 @@ window.addEventListener('DOMContentLoaded', () => {
 			message.insertAdjacentHTML('afterbegin', `<img src="images/preloader.gif" >`)
 			const formData = new FormData(form)
 			formData.forEach((el, key) => body[key] = el)
-			console.log(el.target);
 			postData(body, () => message.textContent = 'Запрос отправлен',
 				() => message.textContent = 'Ошибка')
 
