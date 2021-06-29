@@ -355,8 +355,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 			const animCount = () => {
-				counter += 50
-				const kef = co
+				const kef = Math.ceil((res + 1) / 2000)
+				counter += 50 * kef
+
 
 				const animId = requestAnimationFrame(animCount);
 				(counter <= res) ? total.textContent = Math.ceil(counter) : cancelAnimationFrame(animId)
