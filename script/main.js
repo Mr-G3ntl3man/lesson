@@ -405,9 +405,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			el.target.querySelectorAll('input').forEach(el => el.value = '')
 		}
 
-		form.addEventListener('submit', el => collector(el))
-		form2.addEventListener('submit', el => collector(el))
-		form3.addEventListener('submit', el => collector(el))
+		document.addEventListener('submit', el => collector(el))
 	}
 	sendForm()
 })
