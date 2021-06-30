@@ -4,6 +4,10 @@ window.addEventListener('DOMContentLoaded', () => {
 			timerMinutes = document.querySelector('#timer-minutes'),
 			timerSeconds = document.querySelector('#timer-seconds')
 
+		timerHours.textContent = '00'
+		timerMinutes.textContent = '00'
+		timerSeconds.textContent = '00'
+
 		const createZero = i => (i < 10 ? `0${i}` : i)
 
 
@@ -24,18 +28,8 @@ window.addEventListener('DOMContentLoaded', () => {
 			timerSeconds.textContent = createZero(getTimeRemaining().seconds)
 		}
 
-		const timer = setInterval(() => {
-			if (getTimeRemaining().timeRemaining > 0) {
-				updateClock()
-			} else {
-				clearInterval(timer)
-				timerHours.textContent = '00'
-				timerMinutes.textContent = '00'
-				timerSeconds.textContent = '00'
-			}
-		}, 1000)
+		const timer = setInterval(() => ((getTimeRemaining().timeRemaining < 0) ? clearInterval(timer) : updateClock()), 0)
 
-		updateClock()
 	}
 	countTimer('30 june 2021')
 
@@ -339,7 +333,6 @@ window.addEventListener('DOMContentLoaded', () => {
 				dayValue = 1,
 				counter = 0
 
-
 			const typeValue = calcType.value,
 				squareValue = calcSquare.value
 
@@ -353,18 +346,15 @@ window.addEventListener('DOMContentLoaded', () => {
 			if (calcCount.value > 1) countValue += (calcCount.value - 1) / 10
 			if (typeValue && squareValue) res = price * typeValue * squareValue * countValue
 
-
 			const animCount = () => {
-				counter += 50
-				if (res > 10000) counter += 300 * 10
-				if (res > 100000) counter += 100000 * 10
-				if (res > 1000000) counter += 1000000 * 20
+				const kef = Math.ceil((res + 1) / 2000)
+				counter += 50 * kef
+
 				const animId = requestAnimationFrame(animCount);
-				(counter <= res) ? total.textContent = counter : cancelAnimationFrame(animId)
+				(counter <= res) ? total.textContent = Math.ceil(counter) : cancelAnimationFrame(animId)
 			}
 			animCount()
 		}
-
 
 		calcBlock.addEventListener('input', el => {
 			if (el.target.matches('select') || el.target.matches('input')) countSum()
@@ -374,33 +364,26 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 	const sendForm = () => {
-		const form = document.getElementById('form1'),
-			form2 = document.getElementById('form2'),
-			form3 = document.getElementById('form3'),
-			message = document.createElement('div'),
+		const message = document.createElement('div'),
 			body = {}
 
-		const postData = body => new Promise((res, rej) => {
-			const request = new XMLHttpRequest()
-
-			request.addEventListener('readystatechange', () => {
-				if (request.readyState !== 4) return;
-				(request.status === 200) ? res() : rej(request.status)
-			})
-
-			request.open('POST', './server.php')
-			request.setRequestHeader('Content-Type', 'application/json')
-			request.send(JSON.stringify(body))
+		const postData = body => fetch('./server.php', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(body),
 		})
 
 		const collector = el => {
 			el.preventDefault()
 			message.insertAdjacentHTML('afterbegin', `<img src="images/preloader.gif" >`)
-			const formData = new FormData(form)
+			const formData = new FormData(el.target)
 			formData.forEach((el, key) => body[key] = el)
 
 			postData(body)
-				.then(() => message.textContent = 'Запрос отправлен')
+				.then(response => {
+					if (response.status !== 200) throw new Error('Status not 200')
+					message.textContent = 'Запрос отправлен'
+				})
 				.catch(() => message.textContent = 'Ошибка')
 
 			message.style.color = '#fff'
@@ -408,9 +391,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			el.target.querySelectorAll('input').forEach(el => el.value = '')
 		}
 
-		form.addEventListener('submit', el => collector(el))
-		form2.addEventListener('submit', el => collector(el))
-		form3.addEventListener('submit', el => collector(el))
+		document.addEventListener('submit', el => collector(el))
 	}
 	sendForm()
 })
