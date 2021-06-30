@@ -373,10 +373,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 	const sendForm = () => {
-		const form = document.getElementById('form1'),
-			form2 = document.getElementById('form2'),
-			form3 = document.getElementById('form3'),
-			message = document.createElement('div'),
+		const message = document.createElement('div'),
 			body = {}
 
 		const postData = (body, output, error) => {
@@ -395,7 +392,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		const collector = el => {
 			el.preventDefault()
 			message.insertAdjacentHTML('afterbegin', `<img src="images/preloader.gif" >`)
-			const formData = new FormData(form)
+			const formData = new FormData(el.target)
 			formData.forEach((el, key) => body[key] = el)
 			postData(body, () => message.textContent = 'Запрос отправлен',
 				() => message.textContent = 'Ошибка')
