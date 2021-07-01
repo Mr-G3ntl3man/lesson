@@ -4,6 +4,10 @@ window.addEventListener('DOMContentLoaded', () => {
 			timerMinutes = document.querySelector('#timer-minutes'),
 			timerSeconds = document.querySelector('#timer-seconds')
 
+		timerHours.textContent = '00'
+		timerMinutes.textContent = '00'
+		timerSeconds.textContent = '00'
+
 		const createZero = i => (i < 10 ? `0${i}` : i)
 
 
@@ -24,18 +28,8 @@ window.addEventListener('DOMContentLoaded', () => {
 			timerSeconds.textContent = createZero(getTimeRemaining().seconds)
 		}
 
-		const timer = setInterval(() => {
-			if (getTimeRemaining().timeRemaining > 0) {
-				updateClock()
-			} else {
-				clearInterval(timer)
-				timerHours.textContent = '00'
-				timerMinutes.textContent = '00'
-				timerSeconds.textContent = '00'
-			}
-		}, 1000)
-
-		updateClock()
+		// eslint-disable-next-line max-len
+		const timer = setInterval(() => ((getTimeRemaining().timeRemaining < 0) ? clearInterval(timer) : updateClock()), 0)
 	}
 	countTimer('30 june 2021')
 
@@ -43,7 +37,6 @@ window.addEventListener('DOMContentLoaded', () => {
 	const toggleMenu = () => {
 		const main = document.querySelector('main'),
 			menu = document.querySelector('menu')
-
 
 		let count = -10
 
@@ -60,7 +53,6 @@ window.addEventListener('DOMContentLoaded', () => {
 			} else {
 				cancelAnimationFrame(aminId)
 			}
-
 		}
 
 		const animClose = () => {
@@ -143,7 +135,6 @@ window.addEventListener('DOMContentLoaded', () => {
 					setTimeout(() => popup.style.display = 'none', 500)
 				}
 			}
-
 
 			if (!target) {
 				if (window.innerWidth < 768) {
@@ -279,47 +270,32 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 	const inputValidation = () => {
-		const calcBlock = document.querySelectorAll('.calc-block input'),
-			userName = document.querySelectorAll('[name="user_name"]'),
-			userMessage = document.querySelector('[name="user_message"]'),
-			email = document.querySelectorAll('[name="user_email"]'),
-			userPhone = document.querySelectorAll('[name="user_phone"]')
+		document.addEventListener('input', el => {
+			const target = el.target
 
-		userName.forEach(el => {
-			el.addEventListener('blur', () => {
+			if (target.matches('.calc-item')) target.value = target.value.replace(/[^\d]/g, '')
+			if (target.matches('[type="tel"]')) target.value = target.value.replace(/[^\d+]/g, '')
+			if (target.matches('[name="user_message"]')) target.value = target.value.replace(/[^а-яё0-9,.!?]/gi, '')
+			if (target.matches('[type="email"]')) target.value = target.value.replace(/^[^a-z@!_~'-.*]/gi, '')
+			if (target.matches('[name="user_name"]')) target.value = target.value.replace(/[^а-яё ]/gi, '')
+		})
+
+		document.addEventListener('blur', el => {
+			const target = el.target
+
+			if (target.matches('[type="email"]')) target.value = target.value.replace(/-+/g, '-')
+			if (target.matches('[name="user_message"]')) {
+				target.value = target.value.replace(/^\s+|\s+$/g, '')
+				target.value = target.value.replace(/\s+/g, ' ')
+			}
+			if (target.matches('[name="user_name"]')) {
 				let res = ''
-				el.value.split(' ').forEach(elem => res += elem.charAt(0).toUpperCase() + elem.slice(1) + ' ')
-				el.value = res
-				el.value = el.value.replace(/[^а-яё ]/gi, '')
-				el.value = el.value.replace(/^\s+|\s+$/g, '')
-				el.value = el.value.replace(/\s+/g, ' ')
-			})
+				target.value.split(' ').forEach(elem => res += elem.charAt(0).toUpperCase() + elem.slice(1) + ' ')
+				target.value = res
+				target.value = target.value.replace(/^\s+|\s+$/g, '')
+				target.value = target.value.replace(/\s+/g, ' ')
+			}
 		})
-
-		userPhone.forEach(el => {
-			el.addEventListener('blur', () => {
-				el.value = el.value.replace(/[^\d+]/g, '')
-			})
-		})
-
-		calcBlock.forEach(el => {
-			el.addEventListener('blur', () => {
-				el.value = el.value.replace(/[^\d]/g, '')
-			})
-		})
-
-		email.forEach(el => {
-			el.addEventListener('blur', () => {
-				el.value = el.value.replace(/^[^a-z@!_~'-.*]/gi, '')
-				el.value = el.value.replace(/-+/g, '-')
-			})
-		})
-
-		userMessage.addEventListener('blur', () => {
-			userMessage.value = userMessage.value.replace(/[^а-яё0-9 ,.!?]/gi, '')
-		})
-
-
 	}
 	inputValidation()
 
@@ -355,16 +331,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 			const animCount = () => {
-				counter += 50
-				if (res > 10000) counter += 300 * 10
-				if (res > 100000) counter += 100000 * 10
-				if (res > 1000000) counter += 1000000 * 20
+				const kef = Math.ceil((res + 1) / 2000)
+				counter += 50 * kef
+
 				const animId = requestAnimationFrame(animCount);
-				(counter <= res) ? total.textContent = counter : cancelAnimationFrame(animId)
+				(counter <= res) ? total.textContent = Math.ceil(counter) : cancelAnimationFrame(animId)
 			}
 			animCount()
 		}
-
 
 		calcBlock.addEventListener('input', el => {
 			if (el.target.matches('select') || el.target.matches('input')) countSum()
@@ -374,10 +348,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 	const sendForm = () => {
-		const form = document.getElementById('form1'),
-			form2 = document.getElementById('form2'),
-			form3 = document.getElementById('form3'),
-			message = document.createElement('div'),
+		const message = document.createElement('div'),
 			body = {}
 
 		const postData = body => new Promise((res, rej) => {
@@ -396,7 +367,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		const collector = el => {
 			el.preventDefault()
 			message.insertAdjacentHTML('afterbegin', `<img src="images/preloader.gif" >`)
-			const formData = new FormData(form)
+			const formData = new FormData(el.target)
 			formData.forEach((el, key) => body[key] = el)
 
 			postData(body)
@@ -408,9 +379,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			el.target.querySelectorAll('input').forEach(el => el.value = '')
 		}
 
-		form.addEventListener('submit', el => collector(el))
-		form2.addEventListener('submit', el => collector(el))
-		form3.addEventListener('submit', el => collector(el))
+		document.addEventListener('submit', el => collector(el))
 	}
 	sendForm()
 })
