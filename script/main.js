@@ -280,22 +280,26 @@ window.addEventListener('DOMContentLoaded', () => {
 			if (target.matches('[name="user_name"]')) target.value = target.value.replace(/[^а-яё ]/gi, '')
 		})
 
-		document.addEventListener('blur', el => {
-			const target = el.target
+		document.querySelectorAll('input').forEach(elem => {
+			elem.addEventListener('blur', el => {
+				const target = el.target
 
-			if (target.matches('[type="email"]')) target.value = target.value.replace(/-+/g, '-')
-			if (target.matches('[name="user_message"]')) {
-				target.value = target.value.replace(/^\s+|\s+$/g, '')
-				target.value = target.value.replace(/\s+/g, ' ')
-			}
-			if (target.matches('[name="user_name"]')) {
-				let res = ''
-				target.value.split(' ').forEach(elem => res += elem.charAt(0).toUpperCase() + elem.slice(1) + ' ')
-				target.value = res
-				target.value = target.value.replace(/^\s+|\s+$/g, '')
-				target.value = target.value.replace(/\s+/g, ' ')
-			}
+				if (target.matches('[type="email"]')) target.value = target.value.replace(/-+/g, '-')
+				if (target.matches('[name="user_message"]')) {
+					target.value = target.value.replace(/^\s+|\s+$/g, '')
+					target.value = target.value.replace(/\s+/g, ' ')
+				}
+				if (target.matches('[name="user_name"]')) {
+					let res = ''
+					target.value.split(' ').forEach(elem => res += elem.charAt(0).toUpperCase() + elem.slice(1) + ' ')
+					target.value = res
+					target.value = target.value.replace(/^\s+|\s+$/g, '')
+					target.value = target.value.replace(/\s+/g, ' ')
+				}
+			})
+
 		})
+
 	}
 	inputValidation()
 
