@@ -34,8 +34,10 @@ const toggleModal = () => {
 
 	popupBtn.forEach(el => el.addEventListener('click', () => {
 		popup.style.display = 'block'
+		popup.style.opacity = '1'
+		popupItem.style.transform = 'translate(-50px,0)'
 
-		if (window.innerWidth > 768) {
+		if (document.body.clientWidth > 768) {
 			popup.style.opacity = '0'
 			popupItem.style.transform = 'translate(-50px,-150%)'
 			anim()
@@ -47,7 +49,7 @@ const toggleModal = () => {
 		const target = ev.target.closest('.popup-content')
 
 		if (ev.target.classList.contains('popup-close')) {
-			if (window.innerWidth < 768) {
+			if (document.body.clientWidth < 768) {
 				popup.style.display = 'none'
 			} else {
 				animModalClose()
@@ -57,7 +59,7 @@ const toggleModal = () => {
 		}
 
 		if (!target) {
-			if (window.innerWidth < 768) {
+			if (document.body.clientWidth < 768) {
 				popup.style.display = 'none'
 			} else {
 				animModalClose()
