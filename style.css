@@ -1,0 +1,37 @@
+body {
+	height: 100vh;
+	background-color: rgb(153, 153, 153);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+.currency {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin: 0 -15px;
+}
+.currency__column {
+	margin: 0 15px;
+	flex: 0 1 30%;
+}
+.currency__val {
+	width: 100%;
+	height: 70px;
+	padding: 10px;
+	font-size: 35px;
+}
+
+.currency__item {
+	display: block;
+	width: 100%;
+	height: 30px;
+	margin-bottom: 20px;
+	border-radius: 10px;
+}
