@@ -277,53 +277,6 @@ window.addEventListener('DOMContentLoaded', () => {
 	}
 	dataImg()
 
-
-	// const inputValidation = () => {
-	// 	const calcBlock = document.querySelectorAll('.calc-block input'),
-	// 		userName = document.querySelectorAll('[name="user_name"]'),
-	// 		userMessage = document.querySelector('[name="user_message"]'),
-	// 		email = document.querySelectorAll('[name="user_email"]'),
-	// 		userPhone = document.querySelectorAll('[name="user_phone"]')
-
-	// 	userName.forEach(el => {
-	// 		el.addEventListener('blur', () => {
-	// 			let res = ''
-	// 			el.value.split(' ').forEach(elem => res += elem.charAt(0).toUpperCase() + elem.slice(1) + ' ')
-	// 			el.value = res
-	// 			el.value = el.value.replace(/[^а-яё ]/gi, '')
-	// 			el.value = el.value.replace(/^\s+|\s+$/g, '')
-	// 			el.value = el.value.replace(/\s+/g, ' ')
-	// 		})
-	// 	})
-
-	// 	userPhone.forEach(el => {
-	// 		el.addEventListener('blur', () => {
-	// 			el.value = el.value.replace(/[^\d+]/g, '')
-	// 		})
-	// 	})
-
-	// 	calcBlock.forEach(el => {
-	// 		el.addEventListener('blur', () => {
-	// 			el.value = el.value.replace(/[^\d]/g, '')
-	// 		})
-	// 	})
-
-	// 	email.forEach(el => {
-	// 		el.addEventListener('blur', () => {
-	// 			el.value = el.value.replace(/^[^a-z@!_~'-.*]/gi, '')
-	// 			el.value = el.value.replace(/-+/g, '-')
-	// 		})
-	// 	})
-
-	// 	userMessage.addEventListener('blur', () => {
-	// 		userMessage.value = userMessage.value.replace(/[^а-яё0-9 ,.!?]/gi, '')
-	// 	})
-
-
-	// }
-	// inputValidation()
-
-
 	const calc = (price = 100) => {
 		const calcBlock = document.querySelector('.calc-block'),
 			calcType = document.querySelector('.calc-type'),
@@ -331,7 +284,6 @@ window.addEventListener('DOMContentLoaded', () => {
 			calcDay = document.querySelector('.calc-day'),
 			total = document.querySelector('#total'),
 			calcCount = document.querySelector('.calc-count')
-
 
 		const countSum = () => {
 			let res = 0,
