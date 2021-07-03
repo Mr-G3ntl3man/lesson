@@ -34,5 +34,3 @@ inputLeft.addEventListener('input', () => {
 		}
 	})
 })
-
-
