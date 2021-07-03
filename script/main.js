@@ -401,8 +401,3 @@ window.addEventListener('DOMContentLoaded', () => {
 	validFrom('#form3')
 
 })
-
-
-
-
-
