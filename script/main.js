@@ -33,9 +33,8 @@ window.addEventListener('DOMContentLoaded', () => {
 				timerMinutes.textContent = '00'
 				timerSeconds.textContent = '00'
 			}
-		}, 1000)
+		}, 0)
 
-		updateClock()
 	}
 	countTimer('30 june 2021')
 
@@ -60,7 +59,6 @@ window.addEventListener('DOMContentLoaded', () => {
 			} else {
 				cancelAnimationFrame(aminId)
 			}
-
 		}
 
 		const animClose = () => {
@@ -122,6 +120,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		popupBtn.forEach(el => el.addEventListener('click', () => {
 			popup.style.display = 'block'
+			popup.style.opacity = '1'
+			popupItem.style.transform = 'translate(-50px,0)'
 
 			if (window.innerWidth > 768) {
 				popup.style.opacity = '0'
@@ -278,50 +278,50 @@ window.addEventListener('DOMContentLoaded', () => {
 	dataImg()
 
 
-	const inputValidation = () => {
-		const calcBlock = document.querySelectorAll('.calc-block input'),
-			userName = document.querySelectorAll('[name="user_name"]'),
-			userMessage = document.querySelector('[name="user_message"]'),
-			email = document.querySelectorAll('[name="user_email"]'),
-			userPhone = document.querySelectorAll('[name="user_phone"]')
+	// const inputValidation = () => {
+	// 	const calcBlock = document.querySelectorAll('.calc-block input'),
+	// 		userName = document.querySelectorAll('[name="user_name"]'),
+	// 		userMessage = document.querySelector('[name="user_message"]'),
+	// 		email = document.querySelectorAll('[name="user_email"]'),
+	// 		userPhone = document.querySelectorAll('[name="user_phone"]')
 
-		userName.forEach(el => {
-			el.addEventListener('blur', () => {
-				let res = ''
-				el.value.split(' ').forEach(elem => res += elem.charAt(0).toUpperCase() + elem.slice(1) + ' ')
-				el.value = res
-				el.value = el.value.replace(/[^а-яё ]/gi, '')
-				el.value = el.value.replace(/^\s+|\s+$/g, '')
-				el.value = el.value.replace(/\s+/g, ' ')
-			})
-		})
+	// 	userName.forEach(el => {
+	// 		el.addEventListener('blur', () => {
+	// 			let res = ''
+	// 			el.value.split(' ').forEach(elem => res += elem.charAt(0).toUpperCase() + elem.slice(1) + ' ')
+	// 			el.value = res
+	// 			el.value = el.value.replace(/[^а-яё ]/gi, '')
+	// 			el.value = el.value.replace(/^\s+|\s+$/g, '')
+	// 			el.value = el.value.replace(/\s+/g, ' ')
+	// 		})
+	// 	})
 
-		userPhone.forEach(el => {
-			el.addEventListener('blur', () => {
-				el.value = el.value.replace(/[^\d+]/g, '')
-			})
-		})
+	// 	userPhone.forEach(el => {
+	// 		el.addEventListener('blur', () => {
+	// 			el.value = el.value.replace(/[^\d+]/g, '')
+	// 		})
+	// 	})
 
-		calcBlock.forEach(el => {
-			el.addEventListener('blur', () => {
-				el.value = el.value.replace(/[^\d]/g, '')
-			})
-		})
+	// 	calcBlock.forEach(el => {
+	// 		el.addEventListener('blur', () => {
+	// 			el.value = el.value.replace(/[^\d]/g, '')
+	// 		})
+	// 	})
 
-		email.forEach(el => {
-			el.addEventListener('blur', () => {
-				el.value = el.value.replace(/^[^a-z@!_~'-.*]/gi, '')
-				el.value = el.value.replace(/-+/g, '-')
-			})
-		})
+	// 	email.forEach(el => {
+	// 		el.addEventListener('blur', () => {
+	// 			el.value = el.value.replace(/^[^a-z@!_~'-.*]/gi, '')
+	// 			el.value = el.value.replace(/-+/g, '-')
+	// 		})
+	// 	})
 
-		userMessage.addEventListener('blur', () => {
-			userMessage.value = userMessage.value.replace(/[^а-яё0-9 ,.!?]/gi, '')
-		})
+	// 	userMessage.addEventListener('blur', () => {
+	// 		userMessage.value = userMessage.value.replace(/[^а-яё0-9 ,.!?]/gi, '')
+	// 	})
 
 
-	}
-	inputValidation()
+	// }
+	// inputValidation()
 
 
 	const calc = (price = 100) => {
@@ -358,7 +358,6 @@ window.addEventListener('DOMContentLoaded', () => {
 				const kef = Math.ceil((res + 1) / 2000)
 				counter += 50 * kef
 
-
 				const animId = requestAnimationFrame(animCount);
 				(counter <= res) ? total.textContent = Math.ceil(counter) : cancelAnimationFrame(animId)
 			}
@@ -372,56 +371,35 @@ window.addEventListener('DOMContentLoaded', () => {
 	}
 	calc()
 
-
-	const sendForm = () => {
-		const form = document.getElementById('form1'),
-			form2 = document.getElementById('form2'),
-			form3 = document.getElementById('form3'),
-			message = document.createElement('div'),
-			body = {}
-
-		const postData = (body, output, error) => {
-			const request = new XMLHttpRequest()
-
-			request.addEventListener('readystatechange', () => {
-				if (request.readyState !== 4) return;
-				(request.status === 200) ? output() : error(request.status)
-			})
-
-			request.open('POST', './server.php')
-			request.setRequestHeader('Content-Type', 'application/json')
-			request.send(JSON.stringify(body))
-		}
-
-		const collector = el => {
-			el.preventDefault()
-			message.textContent = 'Загрузка....'
-			const formData = new FormData(form)
-			formData.forEach((el, key) => body[key] = el)
-
-			postData(body, () => message.textContent = 'Запрос отправлен',
-				() => message.textContent = 'Ошибка')
-
-			if (el.target.closest('#form1')) {
-				form.appendChild(message)
-				form.querySelectorAll('input').forEach(el => el.value = '')
-			}
-			if (el.target.closest('#form2')) {
-				form2.appendChild(message)
-				form2.querySelectorAll('input').forEach(el => el.value = '')
-			}
-			if (el.target.closest('#form3')) {
-				form3.appendChild(message)
-				message.style.color = '#fff'
-				form3.querySelectorAll('input').forEach(el => el.value = '')
-			}
-		}
-
-		form.addEventListener('submit', el => collector(el))
-		form2.addEventListener('submit', el => collector(el))
-		form3.addEventListener('submit', el => collector(el))
+	const validFrom = (form) => {
+		const valid = new Validator({
+			selector: form,
+			pattern: {},
+			method: {
+				[`${form.slice(1)}-phone`]: [
+					['notEmpty'],
+					['pattern', 'phone']
+				],
+				[`${form.slice(1)}-email`]: [
+					['notEmpty'],
+					['pattern', 'email']
+				],
+				[`${form.slice(1)}-name`]: [
+					['notEmpty'],
+					['pattern', 'rus']
+				],
+				[`${form.slice(1)}-message`]: [
+					['notEmpty'],
+					['pattern', 'rus']
+				],
+			},
+		})
+		valid.init()
 	}
-	sendForm()
+	validFrom('#form1')
+	validFrom('#form2')
+	validFrom('#form3')
+
 })
 
 
