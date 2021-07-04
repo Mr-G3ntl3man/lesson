@@ -97,4 +97,13 @@ body {
 	background-color: rgba(188, 188, 188, 0.4);
 	padding: 20px;
 	border-radius: 10px;
+	opacity: 0;
+	transform: translateY(-10%);
+	transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.anim {
+	opacity: 1;
+	transform: translateY(0);
+	transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }

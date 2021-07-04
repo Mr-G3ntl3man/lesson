@@ -24,7 +24,15 @@ const getMovies = url => {
 			})
 			.then(response => uniqueMovies(response))
 			.then(response => addMovies(response))
-			.then(response => (!listWrapper.innerHTML) ? listWrapper.appendChild(response) : listWrapper.querySelector(`.${response.className}`).remove())
+			.then(response => {
+				if (!listWrapper.innerHTML) {
+					listWrapper.appendChild(response)
+					setTimeout(() => response.classList.add('anim'), 200);
+				} else {
+					listWrapper.querySelector(`.${response.className}`).classList.remove('anim')
+					setTimeout(() => listWrapper.querySelector(`.${response.className}`).remove(), 300);
+				}
+			})
 			.catch(er => console.error(er))
 	}
 
