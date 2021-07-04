@@ -69,3 +69,4 @@ document.addEventListener('click', event => {
 	if (event.target.matches('.menu__btn')) getMovies('./dbHeroes.json')
 	if (event.target.matches('.menu__item')) addCard('./dbHeroes.json', event)
 })
+
