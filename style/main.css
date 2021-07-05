@@ -104,7 +104,9 @@ body {
 	transform: translateY(-10%);
 	transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
-
+.menu__list-container {
+	width: 101%;
+}
 .anim {
 	opacity: 1;
 	transform: translateY(0);
