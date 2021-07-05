@@ -79,3 +79,5 @@ document.addEventListener('click', event => {
 	if (event.target.matches('.menu__item')) addCard('./dbHeroes.json', event)
 })
 
+
+
