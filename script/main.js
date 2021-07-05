@@ -300,9 +300,7 @@ window.addEventListener('DOMContentLoaded', () => {
 					target.value = target.value.replace(/\s+/g, ' ')
 				}
 			})
-
 		})
-
 	}
 	inputValidation()
 
