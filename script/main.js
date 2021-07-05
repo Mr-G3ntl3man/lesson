@@ -67,7 +67,6 @@ const addCard = (url, event) => {
 			return response.json()
 		})
 		.then(response => {
-			console.log(response);
 			document.querySelector('.card').innerHTML = ''
 			checkCard(response)
 		})
