@@ -55,6 +55,7 @@ const addCard = (url, event) => {
 							<li class='card__bg' style='background: url(${card[key]}) no-repeat 0 0 / cover'></li>`)
 			}
 			cardWrapper.appendChild(ul)
+			setTimeout(() => ul.classList.add('anim-card'), 200)
 		}
 	}
 

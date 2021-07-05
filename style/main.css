@@ -37,6 +37,9 @@ body {
 	padding: 10px;
 	margin: 15px;
 	box-shadow: 0 0 10px rgb(0, 0, 0);
+	opacity: 0;
+	transform: scale(0);
+	transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 .card__item {
 }
@@ -94,7 +97,7 @@ body {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	background-color: rgba(188, 188, 188, 0.4);
+	/* background-color: rgba(188, 188, 188, 0.4); */
 	padding: 20px;
 	border-radius: 10px;
 	opacity: 0;
@@ -105,5 +108,11 @@ body {
 .anim {
 	opacity: 1;
 	transform: translateY(0);
+	transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.anim-card {
+	opacity: 1;
+	transform: scale(1);
 	transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
