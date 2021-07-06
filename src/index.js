@@ -10,7 +10,7 @@ import calcInput from './modules/calcInput'
 import sendForm from './modules/sendForm'
 
 
-countTimer('30 june 2021')
+countTimer('10 july 2021')
 
 toggleMenu()
 

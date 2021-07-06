@@ -10,14 +10,14 @@
 		"sourceType": "module"
 	},
 	"rules": {
-		"indent": [
-			"error",
-			"tab"
-		],
-		"linebreak-style": [
-			"error",
-			"windows"
-		],
+		// "indent": [
+		// 	"error",
+		// 	"tab"
+		// ],
+		// "linebreak-style": [
+		// 	"warn",
+		// 	"windows"
+		// ],
 		"semi": [
 			"error",
 			"never"

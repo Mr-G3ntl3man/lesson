@@ -1,32 +1,55 @@
 const inputValidation = () => {
-	const mail = document.querySelectorAll('[type="email"]')
+	const mail = document.querySelectorAll('[type="email"]'),
+		btnTop = document.querySelector('#form1 button'),
+		btnBot = document.querySelector('#form2 button'),
+		btnModal = document.querySelector('#form3 button')
+
+
 	mail.forEach(el => el.setAttribute('required', ''))
 
-	document.addEventListener('input', el => {
-		const target = el.target,
-			formBtn = document.querySelector('.form-btn')
+	const styleSuccess = (el, btn) => {
+		el.style.cssText = `	border: 1px solid green;box-shadow: 0 0 10px green;`
+		if (btn) btn.removeAttribute('disabled')
+	}
+	const styleError = (el, btn) => {
+		el.style.cssText = `border: 1px solid red;box-shadow: 0 0 10px red;	`
+		if (btn) btn.setAttribute('disabled', 'disabled')
+	}
 
-		if (target.matches('.calc-item')) target.value = target.value.replace(/[^\d]/g, '')
-		if (target.matches('[type="tel"]')) {
-			target.value = target.value.replace(/[^\d+]/g, '')
-			target.reportValidity()
-			target.setCustomValidity('')
+	const formValid = (target, form, btn) => {
+		if (target.closest(form)) {
+			if (target.matches('[type="tel"]')) {
+				target.reportValidity()
+				target.setCustomValidity('');
 
-			if (target.value.match(/^\+/)) {
-				target.setAttribute('maxlength', '12');
-				(target.value.length < 12) ? formBtn.setAttribute('disabled', 'disabled') : formBtn.removeAttribute('disabled')
-			} else if (target.value.match(/^7/) || target.value.match(/^8/)) {
-				target.setAttribute('maxlength', '11');
-				(target.value.length < 11) ? formBtn.setAttribute('disabled', 'disabled') : formBtn.removeAttribute('disabled')
-			} else {
-				target.setAttribute('maxlength', '1');
-				formBtn.setAttribute('disabled', 'disabled')
-				target.setCustomValidity('Ошибка! Поле должно начинаться с (+,7,8) и быть не длинее 11 или 12 символов');
+				(/^\+\d{11}$/.test(target.value) || /^[78]\d{10}$/.test(target.value)) ? styleSuccess(target, btn) :
+					styleError(target, btn),
+					target.setCustomValidity('Ошибка! Поле должно начинаться с (+,7,8) и быть не длинее 11 или 12 символов')
+			}
+
+			if (target.matches('[name="user_message"]')) {
+				(target.value !== '') ? ((/^[а-яё0-9,.!? ]+$/i.test(target.value)) ? styleSuccess(target, btn) : styleError(target, btn)) :
+					styleError(target, btn)
+			}
+
+			if (target.matches('[type="email"]')) {
+				(/-?\w+@\w+\.\w{2,3}/.test(target.value)) ? styleSuccess(target, btn) : styleError(target, btn)
+			}
+
+			if (target.matches('[name="user_name"]')) {
+				(/^[а-яё]+ [а-яё]+$/i.test(target.value)) ? styleSuccess(target, btn) : styleError(target, btn)
 			}
 		}
-		if (target.matches('[name="user_message"]')) target.value = target.value.replace(/[^а-яё0-9,.!?]/gi, '')
-		if (target.matches('[type="email"]')) target.value = target.value.replace(/^[^a-z@!_~'-.*]/gi, '')
-		if (target.matches('[name="user_name"]')) target.value = target.value.replace(/[^а-яё ]/gi, '')
+	}
+
+	document.addEventListener('input', el => {
+		const target = el.target
+
+		if (target.matches('.calc-item')) (/^\d+$/.test(target.value)) ? styleSuccess(target) : styleError(target)
+
+		formValid(target, '#form1', btnTop)
+		formValid(target, '#form2', btnBot)
+		formValid(target, '#form3', btnModal)
 	})
 
 	document.querySelectorAll('input').forEach(elem => {
@@ -40,7 +63,8 @@ const inputValidation = () => {
 			}
 			if (target.matches('[name="user_name"]')) {
 				let res = ''
-				target.value.split(' ').forEach(elem => res += elem.charAt(0).toUpperCase() + elem.slice(1) + ' ')
+				target.value.split(' ').forEach(elem => res += elem.charAt(0).toUpperCase() + elem.slice(1).toLowerCase() + ' ')
+
 				target.value = res
 				target.value = target.value.replace(/^\s+|\s+$/g, '')
 				target.value = target.value.replace(/\s+/g, ' ')
