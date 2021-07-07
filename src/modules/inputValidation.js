@@ -19,7 +19,9 @@ const inputValidation = () => {
 	const formValid = (target, form, btn) => {
 		if (target.closest(form)) {
 			if (target.matches('[type="tel"]')) {
+				target.value = target.value.replace(/[^\d+]/g, '')
 				target.reportValidity()
+
 				if (/^\+\d{11}$/.test(target.value) || /^[78]\d{10}$/.test(target.value)) {
 					styleSuccess(target, btn)
 					target.setCustomValidity('')
@@ -30,15 +32,18 @@ const inputValidation = () => {
 			}
 
 			if (target.matches('[name="user_message"]')) {
+				target.value = target.value.replace(/[^а-яё0-9 ,.!?]/gi, '');
 				(target.value !== '') ? ((/^[а-яё0-9,.!? ]+$/i.test(target.value)) ? styleSuccess(target, btn) : styleError(target, btn)) :
 					styleError(target, btn)
 			}
 
 			if (target.matches('[type="email"]')) {
+				target.value = target.value.replace(/[^a-z@!_~'-.*]/gi, '');
 				(/^\w+@\w+\.\w{2,3}$/.test(target.value)) ? styleSuccess(target, btn) : styleError(target, btn)
 			}
 
 			if (target.matches('[name="user_name"]')) {
+				target.value = target.value.replace(/[^а-яё]/gi, '');
 				(/^[а-яё]{2,}$/i.test(target.value)) ? styleSuccess(target, btn) : styleError(target, btn)
 			}
 		}
@@ -47,7 +52,10 @@ const inputValidation = () => {
 	document.addEventListener('input', el => {
 		const target = el.target
 
-		if (target.matches('.calc-item')) (/^\d+$/.test(target.value)) ? styleSuccess(target) : styleError(target)
+		if (target.matches('.calc-item')) {
+			target.value = target.value.replace(/[^\d]/g, '');
+			(/^\d+$/.test(target.value)) ? styleSuccess(target) : styleError(target)
+		}
 
 		formValid(target, '#form1', btnTop)
 		formValid(target, '#form2', btnBot)
