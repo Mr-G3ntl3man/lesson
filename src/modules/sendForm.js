@@ -19,8 +19,12 @@ const sendForm = () => {
 			.then(response => {
 				if (response.status !== 200) throw new Error('Status not 200')
 				message.textContent = 'Запрос отправлен'
+				setTimeout(() => message.textContent = '', 2000)
 			})
-			.catch(() => message.textContent = 'Ошибка')
+			.catch(() => {
+				message.textContent = 'Ошибка'
+				setTimeout(() => message.textContent = '', 2000)
+			})
 
 		message.style.color = '#fff'
 		el.target.appendChild(message)

@@ -6,6 +6,7 @@ const inputValidation = () => {
 
 
 	mail.forEach(el => el.setAttribute('required', ''))
+	document.querySelector('#form2-message').setAttribute('required', '')
 
 	const styleSuccess = (el, btn) => {
 		el.style.cssText = `	border: 1px solid green;box-shadow: 0 0 10px green;`
@@ -33,8 +34,8 @@ const inputValidation = () => {
 
 			if (target.matches('[name="user_message"]')) {
 				target.value = target.value.replace(/[^а-яё0-9 ,.!?]/gi, '');
-				(target.value !== '') ? ((/^[а-яё0-9,.!? ]+$/i.test(target.value)) ? styleSuccess(target, btn) : styleError(target, btn)) :
-					styleError(target, btn)
+				(target.value.trim() === '') ? styleError(target, btn) :
+					((/^[а-яё0-9,.!? ]+$/i.test(target.value)) ? styleSuccess(target, btn) : styleError(target, btn))
 			}
 
 			if (target.matches('[type="email"]')) {
@@ -52,7 +53,7 @@ const inputValidation = () => {
 	document.addEventListener('input', el => {
 		const target = el.target
 
-		if (target.matches('.calc-item')) {
+		if (target.matches('input.calc-item')) {
 			target.value = target.value.replace(/[^\d]/g, '');
 			(/^\d+$/.test(target.value)) ? styleSuccess(target) : styleError(target)
 		}

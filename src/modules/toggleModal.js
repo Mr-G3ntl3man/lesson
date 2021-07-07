@@ -68,6 +68,16 @@ const toggleModal = () => {
 			}
 		}
 	})
+
+	document.addEventListener('submit', () => {
+		if (document.body.clientWidth < 768) {
+			popup.style.display = 'none'
+		} else {
+			animModalClose()
+			setTimeout(() => animClose(), 400)
+			setTimeout(() => popup.style.display = 'none', 500)
+		}
+	})
 }
 
 export default toggleModal
