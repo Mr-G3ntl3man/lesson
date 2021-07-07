@@ -10,6 +10,7 @@ const sendForm = () => {
 
 	const collector = el => {
 		el.preventDefault()
+		document.querySelectorAll('form input').forEach(el => el.style.cssText = `box-shadow: transparent; border: none;`)
 		message.insertAdjacentHTML('afterbegin', `<img src="images/preloader.gif" >`)
 		const formData = new FormData(el.target)
 		formData.forEach((el, key) => body[key] = el)

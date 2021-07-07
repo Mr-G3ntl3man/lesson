@@ -19,12 +19,13 @@ const inputValidation = () => {
 	const formValid = (target, form, btn) => {
 		if (target.closest(form)) {
 			if (target.matches('[type="tel"]')) {
-				target.reportValidity()
-				target.setCustomValidity('');
-
-				(/^\+\d{11}$/.test(target.value) || /^[78]\d{10}$/.test(target.value)) ? styleSuccess(target, btn) :
-					styleError(target, btn),
+				if (/^\+\d{11}$/.test(target.value) || /^[78]\d{10}$/.test(target.value)) {
+					styleSuccess(target, btn)
+					target.setCustomValidity('')
+				} else {
+					styleError(target, btn)
 					target.setCustomValidity('Ошибка! Поле должно начинаться с (+,7,8) и быть не длинее 11 или 12 символов')
+				}
 			}
 
 			if (target.matches('[name="user_message"]')) {
@@ -33,11 +34,11 @@ const inputValidation = () => {
 			}
 
 			if (target.matches('[type="email"]')) {
-				(/-?\w+@\w+\.\w{2,3}/.test(target.value)) ? styleSuccess(target, btn) : styleError(target, btn)
+				(/^\w+@\w+\.\w{2,3}$/.test(target.value)) ? styleSuccess(target, btn) : styleError(target, btn)
 			}
 
 			if (target.matches('[name="user_name"]')) {
-				(/^[а-яё]+ [а-яё]+$/i.test(target.value)) ? styleSuccess(target, btn) : styleError(target, btn)
+				(/^[а-яё]{2,}$/i.test(target.value)) ? styleSuccess(target, btn) : styleError(target, btn)
 			}
 		}
 	}
