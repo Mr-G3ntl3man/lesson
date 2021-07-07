@@ -19,6 +19,7 @@ const inputValidation = () => {
 	const formValid = (target, form, btn) => {
 		if (target.closest(form)) {
 			if (target.matches('[type="tel"]')) {
+				target.reportValidity()
 				if (/^\+\d{11}$/.test(target.value) || /^[78]\d{10}$/.test(target.value)) {
 					styleSuccess(target, btn)
 					target.setCustomValidity('')
