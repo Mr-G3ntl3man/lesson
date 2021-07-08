@@ -48,12 +48,6 @@ body .main .input-cities #select-cities {
 	color: #00416a;
 }
 
-/* body .main .input-cities #select-cities:focus ~ .label {
-	top: -25px;
-	left: 0;
-	color: #00416a;
-} */
-
 body .main .input-cities .close-button {
 	position: absolute;
 	right: 0;
@@ -119,6 +113,7 @@ body .main .input-cities label {
 	background: #fff;
 	max-height: 300px;
 	overflow: auto;
+	overflow-x: hidden;
 }
 
 .dropdown-lists {
@@ -126,10 +121,18 @@ body .main .input-cities label {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
+	position: relative;
+	top: 0;
+	left: 0;
 }
 
 .dropdown-lists__list {
-	width: 100%;
+}
+.dropdown-lists__col {
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 410px;
 }
 
 .dropdown-lists__list--select {
@@ -229,4 +232,29 @@ body .main .input-cities label {
 	top: -25px;
 	left: 0;
 	color: #00416a;
+}
+
+.loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 0;
+}
+
+.error {
+	position: absolute;
+	top: 15%;
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: 40px;
+	color: rgb(194, 43, 43);
+}
+
+.find,
+.not-found {
+	color: #000 !important;
+}
+
+.dropdown-lists__list--autocomplete .dropdown-lists__city {
+	color: rgb(128, 128, 128);
 }
