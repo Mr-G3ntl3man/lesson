@@ -39,13 +39,21 @@ const inputValidation = () => {
 			}
 
 			if (target.matches('[type="email"]')) {
-				target.value = target.value.replace(/[^a-z@!_~'-.*]/gi, '');
-				(/^\w+@\w+\.\w{2,3}$/.test(target.value)) ? styleSuccess(target, btn) : styleError(target, btn)
+				target.value = target.value.replace(/[^a-z0-9@!_~'-.*]/gi, '');
+				target.reportValidity()
+
+				if (/^\w+@\w+\.\w{2,3}$/.test(target.value)) {
+					styleSuccess(target, btn)
+					target.setCustomValidity('')
+				} else {
+					styleError(target, btn)
+					target.setCustomValidity('Формат почты qwe@qwe.qwe')
+				}
 			}
 
 			if (target.matches('[name="user_name"]')) {
-				target.value = target.value.replace(/[^а-яё]/gi, '');
-				(/^[а-яё]{2,}$/i.test(target.value)) ? styleSuccess(target, btn) : styleError(target, btn)
+				target.value = target.value.replace(/[^а-яё ]/gi, '');
+				(/^[а-яё ]{2,}[а-яё ]?/i.test(target.value)) ? styleSuccess(target, btn) : styleError(target, btn)
 			}
 		}
 	}
