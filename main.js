@@ -8,7 +8,49 @@ const dropdownDefault = document.querySelector('.dropdown-lists__list--default')
 
 followBtn.style.pointerEvents = 'none'
 
-const defaultList = (url, time = 200) => {
+let data = JSON.parse(localStorage.getItem('localCountry')) || []
+
+const requestLocalCountry = url => {
+	const localCountry = (document.cookie === 'null' || document.cookie === '') ?
+		prompt(`Введите локаль(RU, EN или DE)`, 'EN') : document.cookie
+
+	document.cookie = localCountry
+
+	fetch(url)
+		.then(response => {
+			if (response.status !== 200) throw new Error('Status not 200')
+			return response
+		})
+		.then(response => response.json())
+		.then(response => {
+			if (!response[document.cookie.toUpperCase()]) {
+				document.cookie = null
+				throw new Error('Нет такой локали!')
+			}
+			return response[document.cookie.toUpperCase()]
+		})
+		.then(response => {
+			data = []
+			data.push(...response)
+			data[0].local = 'RU'
+			data[1].local = 'DE'
+			data[2].local = 'EN'
+			return data
+		})
+		.then(response => {
+			response.sort((a, b) => a.local === document.cookie.toUpperCase() ?
+				-1 : b.local === document.cookie.toUpperCase() ? 1 : 0)
+
+			return response
+		})
+		.then(response => localStorage.setItem('localCountry', JSON.stringify(response)))
+		.catch(er => document.body.insertAdjacentHTML('afterbegin', `<div class='error'>${er}</div>`))
+}
+
+requestLocalCountry('./db_cities.json')
+
+
+const defaultList = () => {
 	const listDefault = document.querySelector('.dropdown-lists__list--default .dropdown-lists__col')
 	listDefault.innerHTML = `<div class='loading'><img src="preload.gif" alt="preload"></div>`
 
@@ -43,24 +85,11 @@ const defaultList = (url, time = 200) => {
 		});
 	}
 
-	fetch(url)
-		.then(response => {
-			if (response.status !== 200) throw new Error('Status not 200')
-
-			return response
-		})
-		.then(response => response.json())
-		.then(response => response.RU.sort((a, b) => b.count - a.count))
-		.then(response => setTimeout(() => createDef(response), time))
-		.catch(er => {
-			listDefault.innerHTML = ''
-			document.body.insertAdjacentHTML('afterbegin', `<div class='error'>${er}</div>`)
-		})
-
-
+	setTimeout(() => createDef(data), 200)
 }
 
-const selectList = (url, target) => {
+
+const selectList = target => {
 	const listSelect = document.querySelector('.dropdown-lists__list--select .dropdown-lists__col')
 	listSelect.innerHTML = `<div class='loading'><img src="preload.gif" alt="preload"></div>`
 
@@ -95,22 +124,11 @@ const selectList = (url, target) => {
 		})
 	}
 
-	fetch(url)
-		.then(response => {
-			if (response.status !== 200) throw new Error('Status not 200')
-
-			return response
-		})
-		.then(response => response.json())
-		.then(response => response.RU.sort((a, b) => b.count - a.count))
-		.then(response => setTimeout(() => createSel(response), 300))
-		.catch(er => {
-			listSelect.innerHTML = ''
-			document.body.insertAdjacentHTML('afterbegin', `<div class='error'>${er}</div>`)
-		})
+	setTimeout(() => createSel(data), 300)
 }
 
-const autocompleteList = (url, target) => {
+
+const autocompleteList = target => {
 	const listAuto = document.querySelector('.dropdown-lists__list--autocomplete .dropdown-lists__countryBlock')
 	listAuto.innerHTML = `<div class='loading'><img src="preload.gif" alt="preload"></div>`
 
@@ -121,7 +139,7 @@ const autocompleteList = (url, target) => {
 	const createAuto = response => {
 		listAuto.innerHTML = ''
 
-		response.RU.forEach(el => {
+		response.forEach(el => {
 			el.cities.forEach(city => {
 				let res = target.value.charAt(0).toUpperCase() + target.value.slice(1).toLowerCase()
 
@@ -144,44 +162,25 @@ const autocompleteList = (url, target) => {
 					}
 				}, 200)
 
-				if (selectCities.value === '') defaultList('./db_cities.json', 0)
+				if (selectCities.value === '') defaultList()
 			})
 		})
 
 	}
 
-	fetch(url)
-		.then(response => {
-			if (response.status !== 200) throw new Error('Status not 200')
-			return response
-		})
-		.then(response => response.json())
-		.then(response => setTimeout(() => createAuto(response), 300))
-		.catch(er => {
-			listAuto.innerHTML = ''
-			document.body.insertAdjacentHTML('afterbegin', `<div class='error'>${er}</div>`)
-		})
-
-}
-const followLink = (url, target) => {
-	fetch(url)
-		.then(response => {
-			if (response.status !== 200) throw new Error('Status not 200')
-			return response
-		})
-		.then(response => response.json())
-		.then(response => {
-			response.RU.forEach(el => {
-				el.cities.forEach(city => {
-					if (city.name === target.textContent.trim() || city.name === target.parentNode.textContent.trim()) {
-						followBtn.style.pointerEvents = 'auto'
-						followBtn.href = city.link
-					}
-				})
-			})
-		})
+	setTimeout(() => createAuto(data), 300)
 }
 
+const followLink = (response, target) => {
+	response.forEach(el => {
+		el.cities.forEach(city => {
+			if (city.name === target.textContent.trim() || city.name === target.parentNode.textContent.trim()) {
+				followBtn.style.pointerEvents = 'auto'
+				followBtn.href = city.link
+			}
+		})
+	})
+}
 
 const swapList = (el, counter) => {
 	let count = counter
@@ -205,11 +204,11 @@ const swapList = (el, counter) => {
 
 
 document.addEventListener('click', el => {
-	if (el.target.matches('#select-cities')) defaultList('./db_cities.json')
+	if (el.target.matches('#select-cities')) defaultList()
 
 	if (el.target.closest('.dropdown-lists__list--default .dropdown-lists__total-line')) {
 		dropdownSelect.style.display = 'block'
-		selectList('./db_cities.json', el.target)
+		selectList(el.target)
 		swapList(405, 0)
 	}
 
@@ -230,20 +229,17 @@ document.addEventListener('click', el => {
 		dropdownDefault.style.display = 'none'
 		dropdownSelect.style.display = 'none'
 	}
+
 	if (el.target.closest('.dropdown-lists__city')) {
-		followLink('./db_cities.json', el.target)
+		followLink(data, el.target)
 	}
 })
 
 document.addEventListener('input', el => {
 	if (el.target.matches('#select-cities')) {
-		autocompleteList('./db_cities.json', el.target);
+		autocompleteList(el.target);
 
 		(selectCities.value === '') ? (closeBtn.style.display = 'none', followBtn.style.pointerEvents = 'none') :
 			closeBtn.style.display = 'block'
 	}
 })
-
-
-
-
