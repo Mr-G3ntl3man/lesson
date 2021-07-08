@@ -12,6 +12,8 @@ const defaultList = url => {
 	listDefault.innerHTML = ''
 
 	dropdownDefault.style.display = 'block'
+	dropdownSelect.style.display = 'none'
+	dropdownAutocomplete.style.display = 'none'
 
 	fetch(url)
 		.then(response => response.json())
@@ -165,6 +167,7 @@ document.addEventListener('click', el => {
 		(selectCities.value === '') ? closeBtn.style.display = 'none' : closeBtn.style.display = 'block'
 		dropdownDefault.style.display = 'none'
 		dropdownSelect.style.display = 'none'
+		dropdownAutocomplete.style.display = 'none'
 	}
 	if (el.target.matches('.dropdown-lists__city')) {
 
