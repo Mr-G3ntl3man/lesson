@@ -14,6 +14,10 @@ const defaultList = url => {
 	dropdownDefault.style.display = 'block'
 
 	fetch(url)
+		.then(response => {
+			if (response.status !== 200) throw new Error('Status not 200')
+			return response
+		})
 		.then(response => response.json())
 		.then(response => response.RU.sort((a, b) => b.count - a.count))
 		.then(response => {
@@ -41,6 +45,9 @@ const defaultList = url => {
 				</div>`)
 			});
 		})
+		.catch(er => {
+
+		})
 }
 
 const selectList = (url, target) => {
@@ -48,6 +55,10 @@ const selectList = (url, target) => {
 	listSelect.innerHTML = ''
 
 	fetch(url)
+		.then(response => {
+			if (response.status !== 200) throw new Error('Status not 200')
+			return response
+		})
 		.then(response => response.json())
 		.then(response => response.RU.sort((a, b) => b.count - a.count))
 		.then(response => {
@@ -89,6 +100,10 @@ const autocompleteList = (url, target) => {
 	dropdownAutocomplete.style.display = 'block'
 
 	fetch(url)
+		.then(response => {
+			if (response.status !== 200) throw new Error('Status not 200')
+			return response
+		})
 		.then(response => response.json())
 		.then(response => {
 			response.RU.forEach(el => {
@@ -123,6 +138,10 @@ const autocompleteList = (url, target) => {
 const followLink = (url, target) => {
 
 	fetch(url)
+		.then(response => {
+			if (response.status !== 200) throw new Error('Status not 200')
+			return response
+		})
 		.then(response => response.json())
 		.then(response => {
 			response.RU.forEach(el => {
@@ -137,6 +156,9 @@ const followLink = (url, target) => {
 		})
 
 }
+
+
+
 
 document.addEventListener('click', el => {
 	if (el.target.matches('#select-cities')) defaultList('./db_cities.json')
