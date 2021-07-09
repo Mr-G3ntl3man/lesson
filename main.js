@@ -44,9 +44,7 @@ const requestLocalCountry = url => {
 	}
 
 	if (document.cookie === 'null' || document.cookie === '') {
-		const localCountry = (document.cookie === 'null' || document.cookie === '') ?
-			prompt(`Введите локаль(RU, EN или DE)`, 'EN') : document.cookie
-
+		const localCountry = prompt(`Введите локаль(RU, EN или DE)`, 'EN')
 		document.cookie = localCountry
 		request()
 	}
