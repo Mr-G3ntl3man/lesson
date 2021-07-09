@@ -12,7 +12,6 @@ let data = JSON.parse(localStorage.getItem('localCountry')) || []
 
 const requestLocalCountry = url => {
 	const request = () => {
-		console.log('sad');
 		fetch(url)
 			.then(response => {
 				if (response.status !== 200) throw new Error('Status not 200')
@@ -44,7 +43,7 @@ const requestLocalCountry = url => {
 			.catch(er => document.body.insertAdjacentHTML('afterbegin', `<div class='error'>${er}</div>`))
 	}
 
-	if (!document.cookie) {
+	if (document.cookie === 'null' || document.cookie === '') {
 		const localCountry = (document.cookie === 'null' || document.cookie === '') ?
 			prompt(`Введите локаль(RU, EN или DE)`, 'EN') : document.cookie
 
