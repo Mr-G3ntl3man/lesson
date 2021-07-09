@@ -44,7 +44,6 @@ const requestLocalCountry = url => {
 			.catch(er => document.body.insertAdjacentHTML('afterbegin', `<div class='error'>${er}</div>`))
 	}
 
-
 	if (!document.cookie) {
 		const localCountry = (document.cookie === 'null' || document.cookie === '') ?
 			prompt(`Введите локаль(RU, EN или DE)`, 'EN') : document.cookie
@@ -206,8 +205,6 @@ const swapList = (el, counter) => {
 
 	(el > 1) ? animNext() : animPrev()
 }
-
-
 
 
 document.addEventListener('click', el => {
