@@ -11,40 +11,47 @@ followBtn.style.pointerEvents = 'none'
 let data = JSON.parse(localStorage.getItem('localCountry')) || []
 
 const requestLocalCountry = url => {
-	const localCountry = (document.cookie === 'null' || document.cookie === '') ?
-		prompt(`Введите локаль(RU, EN или DE)`, 'EN') : document.cookie
+	const request = () => {
+		console.log('sad');
+		fetch(url)
+			.then(response => {
+				if (response.status !== 200) throw new Error('Status not 200')
+				return response
+			})
+			.then(response => response.json())
+			.then(response => {
+				if (!response[document.cookie.toUpperCase()]) {
+					document.cookie = null
+					throw new Error('Нет такой локали!')
+				}
+				return response[document.cookie.toUpperCase()]
+			})
+			.then(response => {
+				data = []
+				data.push(...response)
+				data[0].local = 'RU'
+				data[1].local = 'DE'
+				data[2].local = 'EN'
+				return data
+			})
+			.then(response => {
+				response.sort((a, b) => a.local === document.cookie.toUpperCase() ?
+					-1 : b.local === document.cookie.toUpperCase() ? 1 : 0)
 
-	document.cookie = localCountry
+				return response
+			})
+			.then(response => localStorage.setItem('localCountry', JSON.stringify(response)))
+			.catch(er => document.body.insertAdjacentHTML('afterbegin', `<div class='error'>${er}</div>`))
+	}
 
-	fetch(url)
-		.then(response => {
-			if (response.status !== 200) throw new Error('Status not 200')
-			return response
-		})
-		.then(response => response.json())
-		.then(response => {
-			if (!response[document.cookie.toUpperCase()]) {
-				document.cookie = null
-				throw new Error('Нет такой локали!')
-			}
-			return response[document.cookie.toUpperCase()]
-		})
-		.then(response => {
-			data = []
-			data.push(...response)
-			data[0].local = 'RU'
-			data[1].local = 'DE'
-			data[2].local = 'EN'
-			return data
-		})
-		.then(response => {
-			response.sort((a, b) => a.local === document.cookie.toUpperCase() ?
-				-1 : b.local === document.cookie.toUpperCase() ? 1 : 0)
 
-			return response
-		})
-		.then(response => localStorage.setItem('localCountry', JSON.stringify(response)))
-		.catch(er => document.body.insertAdjacentHTML('afterbegin', `<div class='error'>${er}</div>`))
+	if (!document.cookie) {
+		const localCountry = (document.cookie === 'null' || document.cookie === '') ?
+			prompt(`Введите локаль(RU, EN или DE)`, 'EN') : document.cookie
+
+		document.cookie = localCountry
+		request()
+	}
 }
 
 requestLocalCountry('./db_cities.json')
